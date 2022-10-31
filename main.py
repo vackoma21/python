@@ -6,7 +6,6 @@ while contn:
         correctNum1 = False
         num1 = float(input("Please write the first number: "))
 
-    while
     num2 = float (input("Please write the second number: "))
     contn2 = True
 
