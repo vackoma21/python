@@ -1,11 +1,8 @@
 contn = True
 print("Welcome to the Calculator")
 while contn:
-    correctNum1 = True
-    while correctNum1:
-        correctNum1 = False
-        num1 = float(input("Please write the first number: "))
-
+    # getting user input, not safe, if you don't input number/float, it will crash
+    num1 = float(input("Please write the first number: "))
     num2 = float (input("Please write the second number: "))
     contn2 = True
 
