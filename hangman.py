@@ -23,7 +23,7 @@ def guess_letter(letter, word, hidden):
     return is_correct, hidden
 
 
-winRatio = 100
+winrate = 100
 lost = 0
 win = 0
 
@@ -52,9 +52,14 @@ while contn:
     print()
     print()
     print('Guess the word:')
+
+    # Change all chars to '_'
     hidden_word = '_' * len(guess_word)
     print(len(guess_word))
-    print(hidden_word)
+    for i in hidden_word:
+        print(i, end=" ")
+
+    # Defining lists to store letters in
     letters = []
     wrong_letters = []
 
@@ -62,6 +67,7 @@ while contn:
         letterA = ''
         contn3 = True
         while contn3:
+            # Checking whether the player input is only 1 letter
             letterA = input('Guess letter: ').lower()
             if len(letterA) == 1 and letterA.isalpha():
                 if letterA in letters:
@@ -71,8 +77,11 @@ while contn:
             else:
                 contn3 = True
 
+        # Saving returned info into 2 variables, found (whether the letter exists in the word)
+        # and hidden_word (letters with '_')
         found, hidden_word = guess_letter(letterA, guess_word, hidden_word)
 
+        # If the letter was already guessed it's not going save in the list
         if letterA in letters:
             again = True
         else:
@@ -81,7 +90,10 @@ while contn:
             if letterA not in hidden_word:
                 wrong_letters.append(letterA)
 
-        print(hidden_word)
+        # Printing out all the current info about the game state to the player
+        for i in hidden_word:
+            print(i, end=" ")
+        print()
         print('Letters: ', end="")
 
         for i in letters:
@@ -101,6 +113,8 @@ while contn:
 
                 lost += 1
                 contn4 = True
+
+                # Player decides whether they want to continue playing or not
                 while contn4:
                     play = input('Play again? [Y,N]: ')
                     if play.lower() == 'y':
@@ -112,17 +126,18 @@ while contn:
                     else:
                         contn4 = True
 
+                # Printing out the games stats
                 if lost > 0 or win > 0:
-                    print('Results so far: ')
                     print()
+                    print('Results so far: ')
 
                     print('You won: ', win, ' time(s)')
                     print('And you lost: ', lost, ' time(s)')
 
                     if lost != 0:
-                        winRatio = round(win / lost)
+                        winRate = round((win / lost)*100)
 
-                    print('Your win/lose ratio is: ', winRatio)
+                    print('Your winrate is: ', winRate)
 
                 break
             elif not found:
@@ -137,7 +152,6 @@ while contn:
                 print('The word is: ', guess_word)
 
                 win += 1
-
                 contn5 = True
                 while contn5:
                     play = input('Play again? [Y,N]: ')
@@ -151,16 +165,16 @@ while contn:
                         contn5 = True
 
                 if lost > 0 or win > 0:
-                    print('Results so far: ')
                     print()
+                    print('Results so far: ')
 
                     print('You won: ', win, ' time(s)')
                     print('And you lost: ', lost, ' time(s)')
 
                     if lost != 0:
-                        winRatio = round(win / lost)
+                        winRate = round((win / lost)*100)
 
-                    print('Your win/lose ratio is: ', winRatio)
+                    print('Your winrate is: ', winRate)
 
                 break
             else:
