@@ -74,6 +74,18 @@ def printList_fce(x):
 # last_car = cars.pop(-1)
 # print(last_car)
 
+# wrong, the file needs to be closed, at the end needs to be closed soubor.close()
+# soubor = open("words.txt", "r")
+# print(soubor.read())
+# print(soubor.readline())
+# with open("words.txt") as f:
+#     # f.readline(), at the end is always \n, fce to correct this: words. strip('\n')
+#     words = f.read().splitlines()
+# with open("difficultWords.txt") as f:
+#     difficultWords = f.read().splitlines()
+
+# dont use word GLOBAL for declaring global variables
+
 primeNo = []
 for i in range(1000):
     if primeNumber(i):

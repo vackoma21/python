@@ -1,30 +1,42 @@
 import random
 
+# saves words from 2 files into 2 lists (1 line = 1 value) by difficulty
 with open("words.txt") as f:
     words = f.read().splitlines()
 with open("difficultWords.txt") as f:
     difficultWords = f.read().splitlines()
 
 
+# Function that takes letter, that the player guesses,
+# word, that is being guessed and the word with hidden letters
 def guess_letter(letter, word, hidden):
     is_correct: bool = False
+    # searches for the guessed letter in the word
     if letter in word:
         is_correct: bool = True
+        # serches for index of the letter, if it was found
         for p in range(0, len(word)):
             if word[p] == letter:
+                # changes the values of the positions of the found letter from '_' to letter
                 hidden = hidden[0:p] + letter + hidden[p + 1:len(word)]
-
+    # returns 2 variables, whether the letter was found (is_correct) and the updated hidden word
     return is_correct, hidden
 
+
+winRatio = 100
+lost = 0
+win = 0
 
 contn: bool = True
 print("The Hangman")
 print()
 while contn:
-    lives = 10
+    # declaring the number of lives the player will work with in the game
+    lives = 8
     guess_word = ""
     contn2 = True
     while contn2:
+        # Player chooses the difficulty, random index number is chosen and found in the coresponidng file
         difficulty = input('Difficulty level - normal(1), nightmare(2): ')
         contn2 = False
         if difficulty == '1':
@@ -50,7 +62,7 @@ while contn:
         letterA = ''
         contn3 = True
         while contn3:
-            letterA = input('Guess letter: ')
+            letterA = input('Guess letter: ').lower()
             if len(letterA) == 1 and letterA.isalpha():
                 if letterA in letters:
                     contn3 = True
@@ -86,15 +98,34 @@ while contn:
             lives -= 1
             if lives == 0:
                 print('Game lost, word you were guessing was: ', guess_word)
-                play = input('Play again? [Y,N]: ')
 
-                if play.lower() == 'y':
-                    contn = True
-                else:
-                    contn = False
+                lost += 1
+                contn4 = True
+                while contn4:
+                    play = input('Play again? [Y,N]: ')
+                    if play.lower() == 'y':
+                        contn = True
+                        contn4 = False
+                    elif play.lower() == 'n':
+                        contn = False
+                        contn4 = False
+                    else:
+                        contn4 = True
+
+                if lost > 0 or win > 0:
+                    print('Results so far: ')
+                    print()
+
+                    print('You won: ', win, ' time(s)')
+                    print('And you lost: ', lost, ' time(s)')
+
+                    if lost != 0:
+                        winRatio = round(win / lost)
+
+                    print('Your win/lose ratio is: ', winRatio)
 
                 break
-            elif found:
+            elif not found:
                 print('The letter was not found, remaining lives: ', lives)
                 print(hidden_word)
                 print()
@@ -103,12 +134,33 @@ while contn:
         else:
             if "_" not in hidden_word:
                 print('You correctly guessed the word! Remaining lives: ', lives)
-                play = input('Play again? [Y,N]: ')
+                print('The word is: ', guess_word)
 
-                if play.lower() == 'y':
-                    contn = True
-                else:
-                    contn = False
+                win += 1
+
+                contn5 = True
+                while contn5:
+                    play = input('Play again? [Y,N]: ')
+                    if play.lower() == 'y':
+                        contn = True
+                        contn5 = False
+                    elif play.lower() == 'n':
+                        contn = False
+                        contn5 = False
+                    else:
+                        contn5 = True
+
+                if lost > 0 or win > 0:
+                    print('Results so far: ')
+                    print()
+
+                    print('You won: ', win, ' time(s)')
+                    print('And you lost: ', lost, ' time(s)')
+
+                    if lost != 0:
+                        winRatio = round(win / lost)
+
+                    print('Your win/lose ratio is: ', winRatio)
 
                 break
             else:
