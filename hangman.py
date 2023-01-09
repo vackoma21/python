@@ -23,7 +23,7 @@ def guess_letter(letter, word, hidden):
     return is_correct, hidden
 
 
-winrate = 100
+winRate = 0
 lost = 0
 win = 0
 
