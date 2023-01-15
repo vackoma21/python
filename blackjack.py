@@ -1,16 +1,25 @@
 import random
 import os
+from typing import List, Any
 
-deck = []
+# deck = []
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q', 'A']
 signs = ['H', 'D', 'C', 'S']
-
 minPlayers = 2
 maxPlayers = 7
+
+
+def drawCard(deck_name, player_number):
+    max_deck_index = len(deck_name) - 1
+    print(max_deck_index)
+    rand_card = random.randint(0, max_deck_index)
+    cardsInPlay.append([player_number, deck[rand_card]])
+    deck.pop(rand_card)
+    return cardsInPlay
+
+
 # make deck with list comprehension
 # deck = [i for i in {'value': values, 'sign': signs}]
-
-print(deck)
 
 # for value in values:
 #     for sign in signs:
@@ -41,24 +50,19 @@ while newRound:
         #     print(deck[x])
 
         # if there is less then 2 cards left, error, please fix !!
-        for x in range(2):
-            print('Lenght01:', len(deck))
-            for i in range(int(playerNo)):
-                maxDeckIndex = len(deck)-1
-                randCard = random.randint(0, maxDeckIndex)
-                print('Lenght:', len(deck))
-                print('Pop:', randCard)
-                print(deck[randCard])
-                cardsInPlay.append([i, deck[randCard]])
-                deck.pop(randCard)
-                print(randCard)
+
+        for player in range(0, int(playerNo)):
+            # drawCard(deck, int(playerNo))
+            # print(deck)
+            if player <= int(playerNo):
+                drawCard(deck, player)
+                for card in cardsInPlay:
+                    for index in card:
+                        print('INDEX: ', index)
+                        if index == player:
+                            print('Pass: ', card)
             print(cardsInPlay)
-
-        for card in cardsInPlay:
-            print(card)
-            for index in card:
-                print('INDEX: ', index)
-
+            stop = input('Stop here for a moment')
         # for x in range(len(deck)):
         #     print(deck[x])
         # break
