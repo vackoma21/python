@@ -11,7 +11,7 @@ maxPlayers = 7
 
 def drawCard(deck_name, player_number):
     max_deck_index = len(deck_name) - 1
-    print(max_deck_index)
+    # print(max_deck_index)
     rand_card = random.randint(0, max_deck_index)
     cardsInPlay.append([player_number, deck[rand_card]])
     deck.pop(rand_card)
