@@ -1,11 +1,17 @@
 import random
 import os
-from typing import List, Any
 
+# fiks (na cvut vysoka ukoly)
 # deck = []
+
+# double down, po rozdani karet, moznost zahrat double down (napr 4, 5),
+# zdvojnasobi se sazka a uz nehraje (pri napr 10, 11 soucet)
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q', 'A']
 signs = ['H', 'D', 'C', 'S']
-minPlayers = 2
+
+chipsVal = [1, 5, 25, 100, 500, 1000]
+
+minPlayers = 1
 maxPlayers = 7
 
 
@@ -16,6 +22,14 @@ def drawCard(deck_name, player_number):
     cardsInPlay.append([player_number, deck[rand_card]])
     deck.pop(rand_card)
     return cardsInPlay
+
+
+def betting():
+    bet = input('Place your bet, must be made out of existing chips [1, 5, 25, 100, 500, 1000]: ')
+    for chip in chipsVal:
+        if bet % chip == 0:
+            return bet
+    return False
 
 
 # make deck with list comprehension
@@ -50,19 +64,29 @@ while newRound:
         #     print(deck[x])
 
         # if there is less then 2 cards left, error, please fix !!
-
+        player = 0
         for player in range(0, int(playerNo)):
             # drawCard(deck, int(playerNo))
             # print(deck)
-            if player <= int(playerNo):
-                drawCard(deck, player)
-                for card in cardsInPlay:
-                    for index in card:
-                        print('INDEX: ', index)
-                        if index == player:
-                            print('Pass: ', card)
+            print('NEW ROUND')
+            print()
             print(cardsInPlay)
-            stop = input('Stop here for a moment')
+            print()
+            print('PLAYER: ', player)
+            drawCard(deck, player)
+            for card in cardsInPlay:
+                for index in card:
+                    print('INDEX: ', index)
+                    if index == player:
+                        print('Pass: ', card)
+                print('NEW LINE')
+        # print(cardsInPlay)
+        stop = input('Stop here for a moment')
+        print('SECOND PLAYER')
+        print()
+        print()
+        print(cardsInPlay)
+        print()
         # for x in range(len(deck)):
         #     print(deck[x])
         # break
