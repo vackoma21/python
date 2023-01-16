@@ -15,6 +15,7 @@ minPlayers = 1
 maxPlayers = 7
 
 
+
 def drawCard(deck_name, player_number):
     max_deck_index = len(deck_name) - 1
     # print(max_deck_index)

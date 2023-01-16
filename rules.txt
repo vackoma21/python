@@ -1,0 +1,22 @@
+To win get as close to 21 total card value as possible
+Dictionary:
+Hit = to ask for another card
+Stand = to not taky any more cards
+Bet = money you place on your win
+Dealer = a person that deals the cards, also plays
+Ace = card with value either 1 or 11
+Blackjack/natural = total is equal to 21
+Bust = exceeding the value 21
+Double down = double the value of your bet, only after the first 2 cards
+Push = the dealer and the player have the same total
+Split = if player has 2 same cards, they can split them to 2 hands, each with its own bet
+Surrender = get back half of your bet, only applicable as the first action
+Upcard = the dealer's card that's face up
+
+Before the game starts, place your bet
+
+At the start everyone gets 2 cards from the deck
+One by one the players choose to STAND or HIT
+STAND means to not take another card
+HIT means to draw another card to get closer to the 21 value point
+If you have 2 same cards at the start, you can choose to play them as 2 different hands
