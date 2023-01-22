@@ -44,6 +44,8 @@ startChips = 100    # dollars
 minPlayers = 1
 maxPlayers = 7
 
+decksAmount = 0
+
 playerNames = []
 
 deck = [{'value': value, 'sign': sign} for value in values for sign in signs]
@@ -53,6 +55,7 @@ atMenu = True
 inGame = False
 atLeaderBoard = False
 atRules = False
+samePlayers = False
 
 print('Blackjack')
 print()
@@ -100,29 +103,61 @@ while programRunning:
     while inGame:
         os.system('cls')
         invalidDecksAmount = True
+        deletePlayers = False
+
+        if len(playerNames) != 0:
+            newPlayers = input('Do you want to delete all players? [Y/N]: ')
+            if newPlayers.lower() == 'y':
+                playerNames = []
+            elif newPlayers.lower() == 'n':
+                samePlayers = True
+                print('This game will be played with following players: ')
+                for username in playerNames:
+                    print(username)
 
         print('Start')
 
         while invalidDecksAmount:
-            decksAmount = input('How many decks do you want to use? [1-8]: ')
-            if decksAmount.isnumeric():
-                if 1 <= int(decksAmount) <= 8:
+            if decksAmount != 0:
+                newAmount = input('Play with different amount of decks? [Y/N]: ')
+                if newAmount.lower() == 'y':
+                    decksAmount = input('How many decks do you want to use? [1-8]: ')
+                    if decksAmount.isnumeric():
+                        if 1 <= int(decksAmount) <= 8:
+                            print('The game will be played with ', decksAmount, ' deck(s)')
+                            invalidDecksAmount = False
+                        else:
+                            print('Invalid amount of decks')
+                elif newAmount.lower() == 'n':
                     print('The game will be played with ', decksAmount, ' deck(s)')
                     invalidDecksAmount = False
-                else:
-                    print('Invalid amount of decks')
+            else:
+                decksAmount = input('How many decks do you want to use? [1-8]: ')
+                if decksAmount.isnumeric():
+                    if 1 <= int(decksAmount) <= 8:
+                        print('The game will be played with ', decksAmount, ' deck(s)')
+                        invalidDecksAmount = False
+                    else:
+                        print('Invalid amount of decks')
         inAddPlayer = True
 
         while inAddPlayer:
-            print('Create the player accounts.')
 
-            addplayer = True
+            if not samePlayers:
+                print('Create the player accounts.')
+                addplayer = True
+            else:
+                addplayer = False
+                inAddPlayer = False
             while addplayer:
+                invalidInput = True
                 player = input('Write your username, please: ')
                 playerNames.append(player)
 
                 print('Player has been added')
                 print('Current number of players is: ', len(playerNames))
+                while invalidInput:
+
                 anotherPlayer = input('Do you want to add another player? [Y/N]: ')
                 if anotherPlayer.lower() == 'y':
                     addplayer = True
