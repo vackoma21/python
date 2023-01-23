@@ -35,6 +35,15 @@ def hit_stand():
             invalid_choice = True
 
 
+def drawCard(deck_name, player_number):
+    max_deck_index = len(deck_name) - 1
+    # print(max_deck_index)
+    rand_card = random.randint(0, max_deck_index)
+    # cardsInPlay.append([player_number, deck[rand_card]])
+    deck.pop(rand_card)
+    return cardsInPlay
+
+
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q', 'A']
 signs = ['H', 'D', 'C', 'S']
 
@@ -47,6 +56,10 @@ maxPlayers = 7
 decksAmount = 0
 
 playerNames = []
+cardsInPlay = []
+
+playerCards = []
+dealerCards = []
 
 deck = [{'value': value, 'sign': sign} for value in values for sign in signs]
 
@@ -61,7 +74,7 @@ print('Blackjack')
 print()
 
 while programRunning:
-    os.system('cls')
+    # os.system('cls')
     print()
     print('Start the game [0]')
     print('Leaderboard [1]')
@@ -94,16 +107,17 @@ while programRunning:
             atMenu = True
 
     while atLeaderBoard:
-        os.system('cls')
+        # os.system('cls')
         print('Here is the leaderboard!')
 
         # at the end use can choose to go back to the main menu
         atMenu, atLeaderBoard = goBack(atMenu, atLeaderBoard)
 
     while inGame:
-        os.system('cls')
+        # os.system('cls')
         invalidDecksAmount = True
         deletePlayers = False
+        inRound = True
 
         if len(playerNames) != 0:
             newPlayers = input('Do you want to delete all players? [Y/N]: ')
@@ -152,24 +166,36 @@ while programRunning:
             while addplayer:
                 invalidInput = True
                 player = input('Write your username, please: ')
-                playerNames.append(player)
 
-                print('Player has been added')
-                print('Current number of players is: ', len(playerNames))
-                while invalidInput:
-
-                anotherPlayer = input('Do you want to add another player? [Y/N]: ')
-                if anotherPlayer.lower() == 'y':
+                if len(player.strip()) == 0:
                     addplayer = True
-                elif anotherPlayer.lower() == 'n':
-                    addplayer = False
-                    inAddPlayer = False
+                else:
+                    playerNames.append(player)
 
+                    print('Player has been added')
+                    print('Current number of players is: ', len(playerNames))
+                    while invalidInput:
+                        print()
+                        invalidInput = False
+                    anotherPlayer = input('Do you want to add another player? [Y/N]: ')
+                    if anotherPlayer.lower() == 'y':
+                        addplayer = True
+                    elif anotherPlayer.lower() == 'n':
+                        addplayer = False
+                        inAddPlayer = False
+
+        while inRound:
+            print('The round is starting')
+            for player in playerNames:
+                cardsInPlay.append({player: {'value': 1, 'sign': 'h'}})
+                stop = input('Wait')
+            stop = input('Wait')
+            print(cardsInPlay)
         # at the end use can choose to go back to the main menu
         atMenu, inGame = goBack(atMenu, inGame)
 
     while atRules:
-        os.system('cls')
+        # os.system('cls')
         print('The Rules of The Game of Blackjack')
         print('Rule No.1: ')
 

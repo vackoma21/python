@@ -15,7 +15,6 @@ minPlayers = 1
 maxPlayers = 7
 
 
-
 def drawCard(deck_name, player_number):
     max_deck_index = len(deck_name) - 1
     # print(max_deck_index)
@@ -44,9 +43,8 @@ def betting():
 # for x in range(len(deck)):
 #     print(deck[x])
 
-deck = [[{'value': value, 'sign': sign}] for value in values for sign in signs]
-for x in range(len(deck)):
-    print(deck[x])
+deck = [{'value': value, 'sign': sign} for value in values for sign in signs]
+print(deck)
 
 newRound = True
 while newRound:
