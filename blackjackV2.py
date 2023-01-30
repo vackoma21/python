@@ -1,4 +1,5 @@
 import random
+from csv import writer
 import csv
 import os
 # leaderboard, write into a new file
@@ -63,17 +64,23 @@ def drawCard(deck_name, player_name):
     return playerCards
 
 
-with open('leaderboard.csv', newline=',') as file:
-    reader = csv.reader(file, quoting=csv.QUOTE_NONNUMERIC,
-                        delimiter=' ')
+with open("leaderboard.csv", 'r') as f:
+    chips = f.readline().split(',')
+    # Strip \n from the last element in the chips list
+    chips[-1] = chips[-1].strip()
 
-    # storing all the rows in an output list
-    output = []
-    for row in reader:
-        output.append(row[:])
 
-for rows in output:
-    print(rows)
+# with open('leaderboard.csv', newline=',') as file:
+#     reader = csv.reader(file, quoting=csv.QUOTE_NONNUMERIC,
+#                         delimiter=' ')
+#
+#     # storing all the rows in an output list
+#     output = []
+#     for row in reader:
+#         output.append(row[:])
+#
+# for rows in output:
+#     print(rows)
 
 
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q', 'A']
@@ -100,6 +107,7 @@ playerChips = {}
 playerBets = {}
 
 stats = []
+maxStats = 10
 
 # Min and max of players that can play in one game
 minPlayers = 1
@@ -166,7 +174,12 @@ while programRunning:
     while atLeaderBoard:
         # os.system('cls')
         print('Here is the leaderboard!')
-
+        print('The most chips in a game: ', max(chips))
+        print('Top 10: ')
+        print(chips.sort(reverse=True))
+        print(chips[:2])
+        for stat in range(maxStats):
+            print(chips[stat])
         # at the end use can choose to go back to the main menu
         atMenu, atLeaderBoard = goBack(atMenu, atLeaderBoard)
 
@@ -251,10 +264,12 @@ while programRunning:
 
                         print('Player has been added')
                         print('Current number of players is: ', len(playerNames))
-                        if len(playerNames) > 7:
+                        if len(playerNames) >= 7:
                             invalidInput = False
                             addplayer = False
                             inAddPlayer = False
+                            print('You reached max number of players!')
+                            wait = input('continue [press enter]')
                         while invalidInput:
                             invalidInput = False
                             anotherPlayer = input('Do you want to add another player? [Y/N]: ')
@@ -267,6 +282,7 @@ while programRunning:
                                 invalidInput = True
         roundNo = 1
         while inRound:
+            playerCards = {}
             # Keeps count of the while loop, must be less than amount of decks appended
             i = 0
             while i < int(decksAmount):
@@ -282,15 +298,19 @@ while programRunning:
                 playerCards.update({player: []})
                 if roundNo == 1:
                     playerChips.update({player: 100})
-                print(playerCards)
+                # print(playerCards)
 
             for i in range(2):
                 for player in playerNames:
                     playerCards = drawCard(deck, player)
                 playerCards = drawCard(deck, dealer)
+
+            print('**********************')
+            print('Upcard is: ', playerCards[dealer][0]['value'], ' - ', playerCards[dealer][0]['sign'])
+            print('**********************')
             # print(playerNames)
-            print(playerChips)
-            print(playerCards)
+            # print(playerChips)
+            # print(playerCards)
             print('Place your bets!')
             for player in playerNames:
                 print('-------------------------------')
@@ -307,13 +327,18 @@ while programRunning:
             print(playerChips)
             for player in playerNames:
                 wrongInput = True
+                wait = input('continue [press enter]')
                 print('-------------------------------')
                 print('PLAYER: ', player)
+                print('Your cards are: ')
+                for card in playerCards[player]:
+                    print(card['value'], ' - ', card['sign'], end=', ')
+                print()
                 print('Total: ', totalValue(cardsValues, playerCards, player))
                 if totalValue(cardsValues, playerCards, player) == 21:
                     print('Blackjack! Wait for the results')
                     wrongInput = False
-                print('Turn of: ', player)
+                # print('Turn of: ', player)
                 while wrongInput:
                     wrongInput = False
                     choice = input('Do you choose to Stand or Hit? [S/H]: ')
@@ -323,7 +348,8 @@ while programRunning:
                         print('You chose to hit')
                         wrongInput = True
                         playerCards = drawCard(deck, player)
-                        print(totalValue(cardsValues, playerCards, player))
+                        print('You drew: ', playerCards[player][-1]['value'], ' - ', playerCards[player][-1]['sign'])
+                        print('New total: ', totalValue(cardsValues, playerCards, player))
                         if totalValue(cardsValues, playerCards, player) > 21:
                             coins = playerBets[player]
                             print('You went bust and lost: ', coins, ' coins')
@@ -333,19 +359,21 @@ while programRunning:
                             wrongInput = False
                     else:
                         wrongInput = True
-            pause = input('continue [enter]')
+            pause = input('continue [press enter]')
+            # TODO: change the leaderboard, write data from for loop, one by one
+            print('-------------------')
             print('The Dealer: ')
             dealer_total = totalValue(cardsValues, playerCards, dealer)
             print('Total: ', dealer_total)
             for cards in playerCards[dealer]:
-                print()
-                # print(cards)
-                # print(cards['value'])
+                print(cards['value'], ' - ', cards['sign'], end=', ')
+            print()
             while dealer_total < 17:
                 playerCards = drawCard(deck, dealer)
                 dealer_total = totalValue(cardsValues, playerCards, dealer)
                 # print(playerCards[dealer])
             for player in playerNames:
+                print()
                 print('--------------------')
                 print(player)
                 total = totalValue(cardsValues, playerCards, player)
@@ -360,7 +388,7 @@ while programRunning:
                         playerChips[player] = coins + ((3 / 2) * coins)
                     if total < 21 or (total == 21 and len(playerCards[player]) != 2):
                         playerChips[player] = playerChips[player] + 2*coins
-                        print(playerChips[player])
+                        # print(playerChips[player])
 
                 elif dealer_total == 21:
                     if len(playerCards[dealer]) == 2:
@@ -383,22 +411,39 @@ while programRunning:
                         print(playerChips[player])
                     elif dealer_total == total:
                         playerChips[player] = playerChips[player] + coins
+                wait = input('continue [press enter]')
 
             for player in playerNames:
                 print('-------------------')
                 print('Player: ', player)
                 print('Coins left: ', playerChips[player])
-                stats.append(playerChips[player])
+                stats.append({player: playerChips[player]})
                 if playerChips[player] == 0:
                     playerNames.remove(player)
+                    playerBets.pop(player)
+                    playerChips.pop(player)
+                wait = input('continue [press enter]')
 
-            with open('leaderboard.csv', 'w') as file:
-                writer = csv.writer(file)
-                writer.writerow(stats)
+            with open('leaderboard.csv', 'a') as file:
+                # {p1: 100}
+                # {p2: 300}
+                # {p2 : 500}
+                # {p3 : 200}
+                # vypsat 5 nejvyssich skore + jejich hrace,
+                # (muze se vypisovat od jednoho hrace jen 1 zaznam, nemusi to tak byt)
+                writer_obj = writer(file)
+                writer_obj.writerow(stats)
 
             # at the end use can choose to go back to the main menu or play another round
             firstRound = False
             playAgain = True
+
+            if len(playerNames) == 0:
+                inRound = False
+                inGame = False
+                atMenu = True
+                playAgain = False
+
             while playAgain:
                 again = input('Play another round? [Y/N]: ')
                 if again.lower() == 'y':
@@ -407,6 +452,7 @@ while programRunning:
                     playAgain = False
                 elif again.lower() == 'n':
                     inRound = False
+                    playAgain = False
                     atMenu, inGame = goBack(atMenu, inGame)
 
     while atRules:
