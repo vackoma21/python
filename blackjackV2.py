@@ -10,40 +10,54 @@ import os
 
 
 # Function to get back to the main menu
+# at_menu = bool value for being in menu
+# at_place = bool value for being at option places that you go to from the menu
 def goBack(at_menu, at_place):
     wrong_input = True
+    # If the user doesn't press enter, it will ask they to do so until they do
     while wrong_input:
         go_back = input('Return back: [press enter]')
         if go_back == '':
             at_menu = True
             at_place = False
             wrong_input = False
+    # Returns correct boolean values for variables to get to main menu
     return at_menu, at_place
 
 
+# Returns total value of players/dealers hand, has solution for ace
+# cards_value = a dictionary with card values and point values of all cards
+# players_cards = a dictionary of all players (+ dealer) and their cards
+# player_name = name of the player/dealer
 def totalValue(cards_values, players_cards, player_name):
     total_card_value = 0
+    # sets default state for existence of ace in players/dealers hand
     has_ace = False
-
+    
+    # For every card in players hand find value and match it with values in card_values
     for current_card in players_cards[player_name]:
         player_card = current_card['value']
         for vals in cards_values:
             for val in vals:
                 if player_card == val:
                     # print(vals[player_card])
+                    # Adds up all found values into one variable
                     total_card_value = total_card_value + vals[player_card]
         # Searches for an ace
         if player_card == 'A':
             has_ace = True
 
-    # If the value exceeds 21, check for ace and assign correct value
+    # If the value exceeds 21, check for an ace and assign correct value
     if total_card_value > 21 and has_ace:
         total_card_value = total_card_value-10
+    # Return the final value
     return total_card_value
 
 
+# Draws card from the assembled deck (always the topmost one)
 def drawCard(deck_name, player_name):
     current_card = deck_name[0]
+    # Appends the chosen card to the players hand and deletes it from the deck
     playerCards[player_name].append(current_card)
     deck_name.pop(0)
     return playerCards
@@ -68,15 +82,17 @@ cardsValues = [
     {'A': 11}
 ]
 
-chipsVal = [1, 5, 25, 100, 500, 1000]
-startChips = 100    # dollars
+startChips = 100    # coins
 playerChips = {}
 playerBets = {}
 
 stats = []
 
+# Min and max of players that can play in one game
 minPlayers = 1
 maxPlayers = 7
+
+# Dealers display name
 dealer = 'The Dealer'
 
 decksAmount = 0
@@ -85,6 +101,7 @@ playerNames = []
 
 playerCards = {}
 
+# Templete for assembling the actual deck
 deckTemplate = [{'value': value, 'sign': sign} for value in values for sign in signs]
 deck = []
 
@@ -107,8 +124,10 @@ while programRunning:
     print('Quit [3]')
 
     while atMenu:
+        # Ask for players desired location
         menuOption = input('Your option: ')
-
+  
+        # Checks input validity and assigns correct bool vals to the variables
         if menuOption.isnumeric():
             if int(menuOption) == 0:
                 print('The game is starting...')
@@ -143,7 +162,8 @@ while programRunning:
         invalidDecksAmount = True
         deletePlayers = False
         inRound = True
-
+        
+        # If there are usernames already created, choose to leave or delete them
         if len(playerNames) != 0:
             newPlayers = input('Do you want to delete all players? [Y/N]: ')
             if newPlayers.lower() == 'y':
