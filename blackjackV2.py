@@ -6,7 +6,7 @@ import os
 # save cards into a dictionary
 # shuffle is a function in python to shuffle the dictionary
 # always take the 0. card
-# do not use random choice, but radnom shuffle instead (the dictionary)
+# do not use random choice, but random shuffle instead (the dictionary)
 
 
 # Function to get back to the main menu
@@ -61,6 +61,19 @@ def drawCard(deck_name, player_name):
     playerCards[player_name].append(current_card)
     deck_name.pop(0)
     return playerCards
+
+
+with open('leaderboard.csv', newline=',') as file:
+    reader = csv.reader(file, quoting=csv.QUOTE_NONNUMERIC,
+                        delimiter=' ')
+
+    # storing all the rows in an output list
+    output = []
+    for row in reader:
+        output.append(row[:])
+
+for rows in output:
+    print(rows)
 
 
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q', 'A']
@@ -177,10 +190,16 @@ while programRunning:
         print('Start')
 
         while invalidDecksAmount:
+            # Check if there aren't already created decks
             if decksAmount != 0:
+
+                # Can choose to play with the same number of decks or new one
                 newAmount = input('Play with different amount of decks? [Y/N]: ')
+                print('Current amount is: ', decksAmount)
                 if newAmount.lower() == 'y':
                     decksAmount = input('How many decks do you want to use? [1-8]: ')
+
+                    # If the decksAmount is a number and withing the 1-8 boundaries, set the new value
                     if decksAmount.isnumeric():
                         if 1 <= int(decksAmount) <= 8:
                             print('The game will be played with ', decksAmount, ' deck(s)')
@@ -188,7 +207,7 @@ while programRunning:
                         else:   # Selected deck amount is invalid
                             print('Invalid amount of decks')
                             decksAmount = 0
-                    else:
+                    else:   # The decksAmount is not a number
                         decksAmount = 0
                 elif newAmount.lower() == 'n':
                     print('The game will be played with ', decksAmount, ' deck(s)')
@@ -199,15 +218,16 @@ while programRunning:
                     if 1 <= int(decksAmount) <= 8:
                         print('The game will be played with ', decksAmount, ' deck(s)')
                         invalidDecksAmount = False
-                    else:
+                    else:   # Does not reflect 1-8
                         print('Invalid amount of decks')
                         decksAmount = 0
-                else:
+                else:   # decksAmount is not a number
                     decksAmount = 0
 
         # print(len(deck))
         inAddPlayer = True
 
+        # While in player creation
         while inAddPlayer:
 
             if not samePlayers:
@@ -231,6 +251,10 @@ while programRunning:
 
                         print('Player has been added')
                         print('Current number of players is: ', len(playerNames))
+                        if len(playerNames) > 7:
+                            invalidInput = False
+                            addplayer = False
+                            inAddPlayer = False
                         while invalidInput:
                             invalidInput = False
                             anotherPlayer = input('Do you want to add another player? [Y/N]: ')
@@ -239,11 +263,11 @@ while programRunning:
                             elif anotherPlayer.lower() == 'n':
                                 addplayer = False
                                 inAddPlayer = False
-                            else:
+                            else:   # Not a valid input
                                 invalidInput = True
         roundNo = 1
         while inRound:
-            # Keeps count of the while loop, must be less then amount of decks appended
+            # Keeps count of the while loop, must be less than amount of decks appended
             i = 0
             while i < int(decksAmount):
                 # Loops over all elements in the deck template and appends them to the deck
