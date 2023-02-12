@@ -210,7 +210,7 @@ while programRunning:
                 newAmount = input('Play with different amount of decks? [Y/N]: ')
                 print('Current amount is: ', decksAmount)
                 if newAmount.lower() == 'y':
-                    decksAmount = input('How many decks do you want to use? [1-8]: ')
+                    decksAmount = input(f'How many decks do you want to use? [{minDecks}-{maxDecks}]: ')
 
                     # If the decksAmount is a number and withing the 1-8 boundaries, set the new value
                     if decksAmount.isnumeric():
@@ -253,10 +253,12 @@ while programRunning:
                 invalidInput = True
                 player = input('Write your username, please: ')
 
+                # repeat until the name lenght is >0
                 if len(player.strip()) == 0:
                     addplayer = True
-                else:
+                else:   # player
                     invalidInput = True
+                    # do not append a player if their username is the same as dealers or other players
                     if playerNames.count(player) != 0 or player.lower() == dealer.lower():
                         invalidInput = False
                     else:
@@ -264,6 +266,7 @@ while programRunning:
 
                         print('Player has been added')
                         print('Current number of players is: ', len(playerNames))
+                        # amount of players cannot exceed the max number (7)
                         if len(playerNames) >= 7:
                             invalidInput = False
                             addplayer = False
@@ -273,14 +276,18 @@ while programRunning:
                         while invalidInput:
                             invalidInput = False
                             anotherPlayer = input('Do you want to add another player? [Y/N]: ')
+                            # allows to add another player
                             if anotherPlayer.lower() == 'y':
                                 addplayer = True
+                            # ends player creation
                             elif anotherPlayer.lower() == 'n':
                                 addplayer = False
                                 inAddPlayer = False
                             else:   # Not a valid input
                                 invalidInput = True
         roundNo = 1
+
+        # starts the gameplay
         while inRound:
             lost = []
             deck = []
@@ -288,22 +295,27 @@ while programRunning:
             stats = []
             # Keeps count of the while loop, must be less than amount of decks appended
             i = 0
+            # appends every card into the deck based on inputted deckNo
             while i < int(decksAmount):
                 # Loops over all elements in the deck template and appends them to the deck
                 for element in deckTemplate:
                     deck.append(element)
                 i = i + 1
+            # adds the dealer into the playerCards list
             playerCards.update({dealer: []})
             random.shuffle(deck)
             print('The round is starting')
-            # Adds the dealer into the list of users with cards in play
+            # adds players into the playerCards list
             for player in playerNames:
                 playerCards.update({player: []})
+                # if its their first round, give everyone 100 starter coins
                 if roundNo == 1:
                     playerCoins.update({player: 100})
 
+            # gives everyone 2 starter cards
             for i in range(2):
                 deck, playerCards = drawCard(deck, dealer)
+                # every player draws a card
                 for player in playerNames:
                     deck, playerCards = drawCard(deck, player)
             print('**********************')
@@ -313,42 +325,53 @@ while programRunning:
             # print(playerChips)
             # print(playerCards)
             print('Place your bets!')
+            # asks every player about their bet
             for player in playerNames:
                 print('-------------------------------')
                 print('Player: ', player)
                 print('You have: ', playerCoins[player], ' coins')
                 invalidInput = True
+                # until valid input is given, repeat
                 while invalidInput:
                     bet = input('Your bet: ')
+                    # checks if the bet is a number
                     if bet.isnumeric():
+                        # bet cannot be more then the player can afford
                         if 0 < int(bet) <= playerCoins[player]:
                             playerBets.update({player: int(bet)})
                             playerCoins[player] = playerCoins[player] - int(bet)
                             invalidInput = False
             print(playerCoins)
+            # writes out players stats
             for player in playerNames:
                 wrongInput = True
                 wait = input('continue [press enter]')
                 print('-------------------------------')
                 print('PLAYER: ', player)
                 print('Your cards are: ')
+                # writes out players cards
                 for card in playerCards[player]:
                     print(card['value'], ' - ', card['sign'], end=', ')
                 print()
                 print('Total: ', totalValue(cardsValues, playerCards, player))
                 doubleDown = 'n'
+                # if players total with 2 cards is 21, they got blackjack
                 if totalValue(cardsValues, playerCards, player) == 21:
                     print('Blackjack! Wait for the results')
                     wrongInput = False
-                # print('Turn of: ', player)
+
+                # if player has enought coins for double down
                 elif playerCoins[player] >= playerBets[player]:
                     invalidInput = True
                     print('You can use double down!')
                     print('If you choose [Y] you will double the bet, draw one card and the round ends for you.')
                     print('Your current bet is: ', playerBets[player])
+
+                    # until they input y or n, repeat
                     while invalidInput:
                         doubleDown = input('Double down? [Y/N]: ')
                         invalidInput = False
+                        # players bet is doubled and they draw 1 card
                         if doubleDown.lower() == 'y':
                             deck, playerCards = drawCard(deck, player)
                             playerCoins[player] = playerCoins[player] - playerBets[player]
@@ -360,12 +383,16 @@ while programRunning:
                         # player failed to input [y] or [n]
                         elif doubleDown.lower() != 'n':
                             invalidInput = True
+                # player chose to not/couldn't do double down
                 if doubleDown.lower() == 'n':
+                    # until correct choice is inputted [s/h], repeat
                     while wrongInput:
                         wrongInput = False
                         choice = input('Do you choose to Stand or Hit? [S/H]: ')
+                        # players round ends
                         if choice.lower() == 's':
                             print('You chose to stand.')
+                        # player draws another card
                         elif choice.lower() == 'h':
                             print('You chose to hit')
                             wrongInput = True
@@ -373,42 +400,50 @@ while programRunning:
                             print('You drew: ', playerCards[player][-1]['value'], ' - ',
                                   playerCards[player][-1]['sign'])
                             print('New total: ', totalValue(cardsValues, playerCards, player))
+                            # player went bust
                             if totalValue(cardsValues, playerCards, player) > 21:
                                 coins = playerBets[player]
                                 print('You went bust and lost: ', coins, ' coins')
                                 wrongInput = False
+                            # player has 21 total
                             elif totalValue(cardsValues, playerCards, player) == 21:
                                 print('21! Wait for the game results.')
                                 wrongInput = False
-                        else:
+                        else:   # player failed to input correct option [s/h]
                             wrongInput = True
             wait = input('continue [press enter]')
-            # TODO: change the leaderboard, write data from for loop, one by one
             print('-------------------')
             print(dealer, ': ')
             dealer_total = totalValue(cardsValues, playerCards, dealer)
             print('Total: ', dealer_total)
+            # writes out dealers cards
             for cards in playerCards[dealer]:
                 print(cards['value'], ' - ', cards['sign'], end=', ')
             print()
+            # unitl dealers doesn't get total of 17+, draw a card
             while dealer_total < 17:
                 deck, playerCards = drawCard(deck, dealer)
                 dealer_total = totalValue(cardsValues, playerCards, dealer)
-                # print(playerCards[dealer])
-            print('New Total: ', dealer_total)
-            print('Cards: ')
-            for cards in playerCards[dealer]:
-                print(cards['value'], ' - ', cards['sign'], end=', ')
-            print()
+
+            # if dealer got some new cards, display them
+            if len(playerCards[dealer]) > 2:
+                print('New Total: ', dealer_total)
+                print('Cards: ')
+                # writes out cards
+                for cards in playerCards[dealer]:
+                    print(cards['value'], ' - ', cards['sign'], end=', ')
+                print()
             wait = input('continue [press enter]')
 
-            # New attempt at showing dealers cards
             dealer_total = totalValue(cardsValues, playerCards, dealer)
             print()
+            # dealer went bust
             if dealer_total > 21:
                 print('The dealer went bust! ')
                 print('Their total is: ', dealer_total)
+            # dealers total is 21
             elif dealer_total == 21:
+                # dealer has blackjack
                 if len(playerCards[dealer]) == 2:
                     print('The dealer has blackjack!')
                 else:   # Dealers total is 21 but they have >2 cards
@@ -420,17 +455,22 @@ while programRunning:
 
             # evaluation of players points
             for player in playerNames:
+                # by defaul the player will get 0 coins
                 coins = 0
                 bet = playerBets[player]
                 total = totalValue(cardsValues, playerCards, player)
+                # player has 21 total
                 if total == 21:
+                    # totals of a player and dealer are equal, bet is returned
                     if dealer_total == 21:
                         coins = bet
-                        # the bet is returned to the player
-                    else:   # Dealers total differs from 21
-                        coins = ((playerBets[player] + ((3 / 2) * bet)) // 1)
-                        print(coins)
-                elif total < 21:   # players total is under 21
+                    # player scored blackjack, 3:2 win
+                    elif dealer_total != 21 and len(playerCards[player]) == 2:   # Dealers total differs from 21
+                        coins = int((playerBets[player] + ((3 / 2) * bet)) // 1)
+                    else:   # player has 21 but with more than 2 cards
+                        coins = playerBets[player] * 2
+                # players total is under 21
+                elif total < 21:
                     # players total is more then dealers, wins double the bet
                     if dealer_total < total or dealer_total > 21:
                         coins = bet * 2
@@ -439,14 +479,15 @@ while programRunning:
                         coins = bet
                 playerCoins[player] = playerCoins[player] + coins
 
+            # writes out stats of every player
             for player in playerNames:
                 print('-------------------')
                 print('Player: ', player)
                 print('Total: ', totalValue(cardsValues, playerCards, player))
                 print('Coins left: ', playerCoins[player])
+                # if the player reaches 0 coins, add to a list
                 if playerCoins[player] == 0:
                     lost.append(player)
-                print(playerNames)
                 wait = input('continue [press enter]')
 
             # every player that hit 0 coins will be removed from all lists
@@ -455,6 +496,8 @@ while programRunning:
                 playerCoins.pop(player)
                 playerNames.remove(player)
 
+            # if any players are left add them to stats
+            # no need to add players with 0 coins to the csv file
             if len(playerNames) != 0:
                 for player in playerNames:
                     stats.append({'Username': player, 'Coins': playerCoins[player]})
