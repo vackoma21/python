@@ -1,5 +1,6 @@
-To win get as close to 21 total card value as possible
-Dictionary:
+* THE RULES *
+To win get as close to 21 total card value as possible without exceeding it
+* Dictionary:
 Hit = to ask for another card
 Stand = to not taky any more cards
 Bet = money you place on your win
@@ -12,7 +13,6 @@ Push = the dealer and the player have the same total
 Upcard = the dealer's card that's face up
 
 Before the game starts, place your bet
-
 At the start everyone gets 2 cards from the deck
 One by one the players choose to STAND or HIT
 STAND means to not take another card

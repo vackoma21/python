@@ -1,7 +1,5 @@
 import random
-from csv import writer
 import csv
-import os
 # leaderboard, write into a new file
 # at the start is a menu (startgame, leaderboard)
 # save cards into a dictionary
@@ -61,27 +59,18 @@ def drawCard(deck_name, player_name):
     # Appends the chosen card to the players hand and deletes it from the deck
     playerCards[player_name].append(current_card)
     deck_name.pop(0)
-    return playerCards
+    return deck_name, playerCards
 
 
 with open("leaderboard.csv", 'r') as f:
-    chips = f.readline().split(',')
-    # Strip \n from the last element in the chips list
-    chips[-1] = chips[-1].strip()
+    header = next(f)
 
+    leaderData = []
+    for row in f:
+        leaderData.append(row.strip('\n'))
 
-# with open('leaderboard.csv', newline=',') as file:
-#     reader = csv.reader(file, quoting=csv.QUOTE_NONNUMERIC,
-#                         delimiter=' ')
-#
-#     # storing all the rows in an output list
-#     output = []
-#     for row in reader:
-#         output.append(row[:])
-#
-# for rows in output:
-#     print(rows)
-
+with open('rules.txt') as f:
+    rules = f.readlines()
 
 values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q', 'A']
 signs = ['H', 'D', 'C', 'S']
@@ -103,15 +92,21 @@ cardsValues = [
 ]
 
 startChips = 100    # coins
-playerChips = {}
+playerCoins = {}
 playerBets = {}
+lost = []
 
 stats = []
 maxStats = 10
+fields_name = ['Username', 'Coins']
+entriesNo = 5
 
 # Min and max of players that can play in one game
 minPlayers = 1
 maxPlayers = 7
+
+minDecks = 2
+maxDecks = 8
 
 # Dealers display name
 dealer = 'The Dealer'
@@ -119,11 +114,11 @@ dealer = 'The Dealer'
 decksAmount = 0
 
 playerNames = []
-
 playerCards = {}
 
-# Templete for assembling the actual deck
+# Template for assembling the actual deck
 deckTemplate = [{'value': value, 'sign': sign} for value in values for sign in signs]
+# The deck
 deck = []
 
 programRunning = True
@@ -172,19 +167,24 @@ while programRunning:
             atMenu = True
 
     while atLeaderBoard:
-        # os.system('cls')
+        splitData = []
+        print()
         print('Here is the leaderboard!')
-        print('The most chips in a game: ', max(chips))
-        print('Top 10: ')
-        print(chips.sort(reverse=True))
-        print(chips[:2])
-        for stat in range(maxStats):
-            print(chips[stat])
-        # at the end use can choose to go back to the main menu
+        print('Top ', entriesNo, ': ')
+        print('Username - coins')
+        for data in leaderData:
+            splitData.append(data.split(','))
+
+        for data in splitData:
+            data[1] = int(data[1])
+
+        splitData.sort(key=lambda x: x[1], reverse=True)
+        for entries in range(1, entriesNo+1):
+            print(entries-1, ') ', splitData[entries-1][0], ' - ', splitData[entries-1][1])
+
         atMenu, atLeaderBoard = goBack(atMenu, atLeaderBoard)
 
     while inGame:
-        # os.system('cls')
         invalidDecksAmount = True
         deletePlayers = False
         inRound = True
@@ -226,9 +226,9 @@ while programRunning:
                     print('The game will be played with ', decksAmount, ' deck(s)')
                     invalidDecksAmount = False
             else:   # Deck amount wasn't selected yet
-                decksAmount = input('How many decks do you want to use? [1-8]: ')
+                decksAmount = input(f'How many decks do you want to use? [{minDecks}-{maxDecks}]: ')
                 if decksAmount.isnumeric():
-                    if 1 <= int(decksAmount) <= 8:
+                    if minDecks <= int(decksAmount) <= maxDecks:
                         print('The game will be played with ', decksAmount, ' deck(s)')
                         invalidDecksAmount = False
                     else:   # Does not reflect 1-8
@@ -257,7 +257,7 @@ while programRunning:
                     addplayer = True
                 else:
                     invalidInput = True
-                    if playerNames.count(player) != 0 or player == dealer:
+                    if playerNames.count(player) != 0 or player.lower() == dealer.lower():
                         invalidInput = False
                     else:
                         playerNames.append(player)
@@ -282,7 +282,10 @@ while programRunning:
                                 invalidInput = True
         roundNo = 1
         while inRound:
+            lost = []
+            deck = []
             playerCards = {}
+            stats = []
             # Keeps count of the while loop, must be less than amount of decks appended
             i = 0
             while i < int(decksAmount):
@@ -297,14 +300,12 @@ while programRunning:
             for player in playerNames:
                 playerCards.update({player: []})
                 if roundNo == 1:
-                    playerChips.update({player: 100})
-                # print(playerCards)
+                    playerCoins.update({player: 100})
 
             for i in range(2):
+                deck, playerCards = drawCard(deck, dealer)
                 for player in playerNames:
-                    playerCards = drawCard(deck, player)
-                playerCards = drawCard(deck, dealer)
-
+                    deck, playerCards = drawCard(deck, player)
             print('**********************')
             print('Upcard is: ', playerCards[dealer][0]['value'], ' - ', playerCards[dealer][0]['sign'])
             print('**********************')
@@ -315,16 +316,16 @@ while programRunning:
             for player in playerNames:
                 print('-------------------------------')
                 print('Player: ', player)
-                print('You have: ', playerChips[player], ' coins')
+                print('You have: ', playerCoins[player], ' coins')
                 invalidInput = True
                 while invalidInput:
                     bet = input('Your bet: ')
                     if bet.isnumeric():
-                        if 0 < int(bet) <= playerChips[player]:
+                        if 0 < int(bet) <= playerCoins[player]:
                             playerBets.update({player: int(bet)})
-                            playerChips[player] = playerChips[player] - int(bet)
+                            playerCoins[player] = playerCoins[player] - int(bet)
                             invalidInput = False
-            print(playerChips)
+            print(playerCoins)
             for player in playerNames:
                 wrongInput = True
                 wait = input('continue [press enter]')
@@ -335,129 +336,172 @@ while programRunning:
                     print(card['value'], ' - ', card['sign'], end=', ')
                 print()
                 print('Total: ', totalValue(cardsValues, playerCards, player))
+                doubleDown = 'n'
                 if totalValue(cardsValues, playerCards, player) == 21:
                     print('Blackjack! Wait for the results')
                     wrongInput = False
                 # print('Turn of: ', player)
-                while wrongInput:
-                    wrongInput = False
-                    choice = input('Do you choose to Stand or Hit? [S/H]: ')
-                    if choice.lower() == 's':
-                        print('You chose to stand.')
-                    elif choice.lower() == 'h':
-                        print('You chose to hit')
-                        wrongInput = True
-                        playerCards = drawCard(deck, player)
-                        print('You drew: ', playerCards[player][-1]['value'], ' - ', playerCards[player][-1]['sign'])
-                        print('New total: ', totalValue(cardsValues, playerCards, player))
-                        if totalValue(cardsValues, playerCards, player) > 21:
-                            coins = playerBets[player]
-                            print('You went bust and lost: ', coins, ' coins')
-                            wrongInput = False
-                        elif totalValue(cardsValues, playerCards, player) == 21:
-                            print('21! Wait for the game results.')
-                            wrongInput = False
-                    else:
-                        wrongInput = True
-            pause = input('continue [press enter]')
+                elif playerCoins[player] >= playerBets[player]:
+                    invalidInput = True
+                    print('You can use double down!')
+                    print('If you choose [Y] you will double the bet, draw one card and the round ends for you.')
+                    print('Your current bet is: ', playerBets[player])
+                    while invalidInput:
+                        doubleDown = input('Double down? [Y/N]: ')
+                        invalidInput = False
+                        if doubleDown.lower() == 'y':
+                            deck, playerCards = drawCard(deck, player)
+                            playerCoins[player] = playerCoins[player] - playerBets[player]
+                            playerBets[player] = playerBets[player] * 2
+                            print(playerBets[player])
+                            print('Your current bet is: ', playerBets[player], ' coins')
+                            print('You drew: ', playerCards[player][-1]['value'], ' - ', playerCards[player][-1]['sign'])
+                            print('Your new total is: ', totalValue(cardsValues, playerCards, player))
+                        # player failed to input [y] or [n]
+                        elif doubleDown.lower() != 'n':
+                            invalidInput = True
+                if doubleDown.lower() == 'n':
+                    while wrongInput:
+                        wrongInput = False
+                        choice = input('Do you choose to Stand or Hit? [S/H]: ')
+                        if choice.lower() == 's':
+                            print('You chose to stand.')
+                        elif choice.lower() == 'h':
+                            print('You chose to hit')
+                            wrongInput = True
+                            deck, playerCards = drawCard(deck, player)
+                            print('You drew: ', playerCards[player][-1]['value'], ' - ',
+                                  playerCards[player][-1]['sign'])
+                            print('New total: ', totalValue(cardsValues, playerCards, player))
+                            if totalValue(cardsValues, playerCards, player) > 21:
+                                coins = playerBets[player]
+                                print('You went bust and lost: ', coins, ' coins')
+                                wrongInput = False
+                            elif totalValue(cardsValues, playerCards, player) == 21:
+                                print('21! Wait for the game results.')
+                                wrongInput = False
+                        else:
+                            wrongInput = True
+            wait = input('continue [press enter]')
             # TODO: change the leaderboard, write data from for loop, one by one
             print('-------------------')
-            print('The Dealer: ')
+            print(dealer, ': ')
             dealer_total = totalValue(cardsValues, playerCards, dealer)
             print('Total: ', dealer_total)
             for cards in playerCards[dealer]:
                 print(cards['value'], ' - ', cards['sign'], end=', ')
             print()
             while dealer_total < 17:
-                playerCards = drawCard(deck, dealer)
+                deck, playerCards = drawCard(deck, dealer)
                 dealer_total = totalValue(cardsValues, playerCards, dealer)
                 # print(playerCards[dealer])
+            print('New Total: ', dealer_total)
+            print('Cards: ')
+            for cards in playerCards[dealer]:
+                print(cards['value'], ' - ', cards['sign'], end=', ')
+            print()
+            wait = input('continue [press enter]')
+
+            # New attempt at showing dealers cards
+            dealer_total = totalValue(cardsValues, playerCards, dealer)
+            print()
+            if dealer_total > 21:
+                print('The dealer went bust! ')
+                print('Their total is: ', dealer_total)
+            elif dealer_total == 21:
+                if len(playerCards[dealer]) == 2:
+                    print('The dealer has blackjack!')
+                else:   # Dealers total is 21 but they have >2 cards
+                    print('The dealer won!')
+                    print('Their total is 21')
+            else:  # Dealers total is less then 21
+                print('The dealer has total lower then 21 (', dealer_total, ')')
+            wait = input('continue [press enter]')
+
+            # evaluation of players points
             for player in playerNames:
-                print()
-                print('--------------------')
-                print(player)
+                coins = 0
+                bet = playerBets[player]
                 total = totalValue(cardsValues, playerCards, player)
-                coins = playerBets[player]
-                print('Total: ', total)
-                print('Bet: ', coins, ' coins')
-                if dealer_total > 21:
-                    print()
-                    print('Dealers new total', dealer_total)
-                    print('The dealer went bust! ')
-                    if total == 21 and len(playerCards[player]) == 2:
-                        playerChips[player] = coins + ((3 / 2) * coins)
-                    if total < 21 or (total == 21 and len(playerCards[player]) != 2):
-                        playerChips[player] = playerChips[player] + 2*coins
-                        # print(playerChips[player])
-
-                elif dealer_total == 21:
-                    if len(playerCards[dealer]) == 2:
-                        print('The dealer has blackjack!')
-                    else:
-                        print('The dealer won!')
-
-                    if total == dealer_total:
-                        playerChips[player] = playerChips[player] + coins
-                        print('It is a drew!')
-                    elif total < dealer_total:
-                        print('You lost!')
-
-                else:   # Dealers total is less then 21
-                    if total == 21 and len(playerCards[player]) == 2:
-                        playerChips[player] = playerChips[player] + ((3 / 2) * coins)
-                        print('Add', playerChips[player])
-                    elif dealer_total < total < 21 or (total == 21 and len(playerCards[player]) != 2):
-                        playerChips[player] = playerChips[player] + 2 * coins
-                        print(playerChips[player])
+                if total == 21:
+                    if dealer_total == 21:
+                        coins = bet
+                        # the bet is returned to the player
+                    else:   # Dealers total differs from 21
+                        coins = ((playerBets[player] + ((3 / 2) * bet)) // 1)
+                        print(coins)
+                elif total < 21:   # players total is under 21
+                    # players total is more then dealers, wins double the bet
+                    if dealer_total < total or dealer_total > 21:
+                        coins = bet * 2
+                    # equal totals, bet is returned
                     elif dealer_total == total:
-                        playerChips[player] = playerChips[player] + coins
-                wait = input('continue [press enter]')
+                        coins = bet
+                playerCoins[player] = playerCoins[player] + coins
 
             for player in playerNames:
                 print('-------------------')
                 print('Player: ', player)
-                print('Coins left: ', playerChips[player])
-                stats.append({player: playerChips[player]})
-                if playerChips[player] == 0:
-                    playerNames.remove(player)
-                    playerBets.pop(player)
-                    playerChips.pop(player)
+                print('Total: ', totalValue(cardsValues, playerCards, player))
+                print('Coins left: ', playerCoins[player])
+                if playerCoins[player] == 0:
+                    lost.append(player)
+                print(playerNames)
                 wait = input('continue [press enter]')
 
-            with open('leaderboard.csv', 'a') as file:
-                # {p1: 100}
-                # {p2: 300}
-                # {p2 : 500}
-                # {p3 : 200}
-                # vypsat 5 nejvyssich skore + jejich hrace,
-                # (muze se vypisovat od jednoho hrace jen 1 zaznam, nemusi to tak byt)
-                writer_obj = writer(file)
-                writer_obj.writerow(stats)
+            # every player that hit 0 coins will be removed from all lists
+            for player in lost:
+                playerBets.pop(player)
+                playerCoins.pop(player)
+                playerNames.remove(player)
+
+            if len(playerNames) != 0:
+                for player in playerNames:
+                    stats.append({'Username': player, 'Coins': playerCoins[player]})
+
+                # appends stats with username and coins into a csv file
+                with open('leaderboard.csv', 'a', newline='') as file:
+                    writer = csv.DictWriter(file, fieldnames=fields_name)
+
+                    # writes one entry per line (username, coinsNo) from list
+                    for row in stats:
+                        writer.writerow(row)
+            else:   # there are no players left, all hit 0 coins, gets them to the menu
+                print('Everyone lost all of their coins.')
+                print('You will now be transported to the menu!')
+                wait = input('continue [press enter]')
 
             # at the end use can choose to go back to the main menu or play another round
-            firstRound = False
             playAgain = True
 
+            # if all the players get to 0 coins, get back to menu
             if len(playerNames) == 0:
                 inRound = False
                 inGame = False
                 atMenu = True
                 playAgain = False
 
+            # until the player chooses a valid option, repeat
             while playAgain:
                 again = input('Play another round? [Y/N]: ')
+                # will start another round
                 if again.lower() == 'y':
+                    # for keeping track of how many rounds have been played
+                    # first round everyone gets starter 100 coins
                     roundNo = roundNo + 1
                     inRound = True
                     playAgain = False
+                # transports the player(s) to the menu
                 elif again.lower() == 'n':
                     inRound = False
                     playAgain = False
                     atMenu, inGame = goBack(atMenu, inGame)
 
+    # writes out rules from a txt file for the player(s) to see
     while atRules:
-        # os.system('cls')
-        print('The Rules of The Game of Blackjack')
-        print('Rule No.1: ')
-
+        print()
+        print()
+        # writes out rules one by one
+        for rule in rules:
+            print(rule, end='')
         atMenu, atRules = goBack(atMenu, atRules)
