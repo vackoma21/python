@@ -32,7 +32,8 @@ def totalValue(cards_values, players_cards, player_name):
     total_card_value = 0
     # sets default state for existence of ace in players/dealers hand
     has_ace = False
-    
+
+    aceAmount = 0
     # For every card in players hand find value and match it with values in card_values
     for current_card in players_cards[player_name]:
         player_card = current_card['value']
@@ -45,10 +46,16 @@ def totalValue(cards_values, players_cards, player_name):
         # Searches for an ace
         if player_card == 'A':
             has_ace = True
+            # keeps a track of how many aces the players hand has
+            aceAmount = aceAmount + 1
 
     # If the value exceeds 21, check for an ace and assign correct value
     if total_card_value > 21 and has_ace:
-        total_card_value = total_card_value-10
+        if aceAmount == 1:
+            exclude = 10
+        else:
+            exclude = (aceAmount-1) * 10
+        total_card_value = total_card_value-exclude
     # Return the final value
     return total_card_value
 
@@ -171,19 +178,23 @@ while programRunning:
         print()
         print('Here is the leaderboard!')
         print('Top ', entriesNo, ': ')
-        print('Username - coins')
+        print('position) Username - coins')
+        # splits data from leaderData list into a splitData list
         for data in leaderData:
             splitData.append(data.split(','))
 
+        # converts numerical strings into integers
         for data in splitData:
             data[1] = int(data[1])
 
+        # sorts data from leaderboard.csv in descending order
         splitData.sort(key=lambda x: x[1], reverse=True)
+        # writes out give number of entries (entriesNo)
         for entries in range(1, entriesNo+1):
-            print(entries-1, ') ', splitData[entries-1][0], ' - ', splitData[entries-1][1])
+            print(entries, ') ', splitData[entries-1][0], ' - ', splitData[entries-1][1])
 
         atMenu, atLeaderBoard = goBack(atMenu, atLeaderBoard)
-
+    # code block containing the whole game (deck amount choice, player creation and the gameplay)
     while inGame:
         invalidDecksAmount = True
         deletePlayers = False
@@ -191,45 +202,53 @@ while programRunning:
         
         # If there are usernames already created, choose to leave or delete them
         if len(playerNames) != 0:
-            newPlayers = input('Do you want to delete all players? [Y/N]: ')
+            newPlayers = input('Do you want to delete all current players? [Y/N]: ')
+            # create a new list for the new players
             if newPlayers.lower() == 'y':
                 playerNames = []
+            # leave the same players, that didn't lose in previous play
             elif newPlayers.lower() == 'n':
                 samePlayers = True
                 print('This game will be played with following players: ')
+                # writes out players usernames
                 for username in playerNames:
                     print(username)
 
         print('Start')
-
+        # until player inputs a valid amount of decks, repeat
         while invalidDecksAmount:
-            # Check if there aren't already created decks
+            # Check if there is decks amount from previous plays
             if decksAmount != 0:
-
                 # Can choose to play with the same number of decks or new one
+                print('You played with: ', decksAmount, ' decks.')
                 newAmount = input('Play with different amount of decks? [Y/N]: ')
                 print('Current amount is: ', decksAmount)
+
+                # The player will choose a new deck amount
                 if newAmount.lower() == 'y':
                     decksAmount = input(f'How many decks do you want to use? [{minDecks}-{maxDecks}]: ')
 
                     # If the decksAmount is a number and withing the 1-8 boundaries, set the new value
                     if decksAmount.isnumeric():
                         if 1 <= int(decksAmount) <= 8:
-                            print('The game will be played with ', decksAmount, ' deck(s)')
+                            print('The game will be played with ', decksAmount, ' decks')
                             invalidDecksAmount = False
                         else:   # Selected deck amount is invalid
                             print('Invalid amount of decks')
                             decksAmount = 0
                     else:   # The decksAmount is not a number
                         decksAmount = 0
+                # player will play with the same decks amount
                 elif newAmount.lower() == 'n':
-                    print('The game will be played with ', decksAmount, ' deck(s)')
+                    print('The game will be played with ', decksAmount, ' decks')
                     invalidDecksAmount = False
             else:   # Deck amount wasn't selected yet
                 decksAmount = input(f'How many decks do you want to use? [{minDecks}-{maxDecks}]: ')
+                # check if players input was a number
                 if decksAmount.isnumeric():
+                    # check if amount of decks is within the bounds (min-max)
                     if minDecks <= int(decksAmount) <= maxDecks:
-                        print('The game will be played with ', decksAmount, ' deck(s)')
+                        print('The game will be played with ', decksAmount, ' decks')
                         invalidDecksAmount = False
                     else:   # Does not reflect 1-8
                         print('Invalid amount of decks')
@@ -258,15 +277,15 @@ while programRunning:
                     addplayer = True
                 else:   # player
                     invalidInput = True
-                    # do not append a player if their username is the same as dealers or other players
-                    if playerNames.count(player) != 0 or player.lower() == dealer.lower():
+                    # do not append a player if their username is the same as dealers or other players or is divider (,)
+                    if playerNames.count(player) != 0 or player.lower() == dealer.lower() or player == ',':
                         invalidInput = False
                     else:
                         playerNames.append(player)
 
                         print('Player has been added')
                         print('Current number of players is: ', len(playerNames))
-                        # amount of players cannot exceed the max number (7)
+                        # amount of players cannot exceed the max number (7), no more can be added
                         if len(playerNames) >= 7:
                             invalidInput = False
                             addplayer = False
@@ -336,12 +355,24 @@ while programRunning:
                     bet = input('Your bet: ')
                     # checks if the bet is a number
                     if bet.isnumeric():
+                        # check if the bet is less or equal to players coins amount
                         # bet cannot be more then the player can afford
                         if 0 < int(bet) <= playerCoins[player]:
-                            playerBets.update({player: int(bet)})
-                            playerCoins[player] = playerCoins[player] - int(bet)
-                            invalidInput = False
-            print(playerCoins)
+                            wasMistake = True
+                            # ask user if their input was correct
+                            while wasMistake:
+                                wasMistake = False
+                                print(f'You wish to bet: {bet} coins')
+                                typo = input('Is that correct? [Y/N]: ')
+                                # add their bet
+                                if typo.lower() == 'y':
+                                    playerBets.update({player: int(bet)})
+                                    playerCoins[player] = playerCoins[player] - int(bet)
+                                    invalidInput = False
+                                # input wasn't correct, ask again
+                                elif typo.lower() != 'n':
+                                    wasMistake = True
+
             # writes out players stats
             for player in playerNames:
                 wrongInput = True
@@ -378,7 +409,8 @@ while programRunning:
                             playerBets[player] = playerBets[player] * 2
                             print(playerBets[player])
                             print('Your current bet is: ', playerBets[player], ' coins')
-                            print('You drew: ', playerCards[player][-1]['value'], ' - ', playerCards[player][-1]['sign'])
+                            print('You drew: ', playerCards[player][-1]['value'], ' - ',
+                                  playerCards[player][-1]['sign'])
                             print('Your new total is: ', totalValue(cardsValues, playerCards, player))
                         # player failed to input [y] or [n]
                         elif doubleDown.lower() != 'n':
@@ -437,6 +469,8 @@ while programRunning:
 
             dealer_total = totalValue(cardsValues, playerCards, dealer)
             print()
+
+            print('-------------------')
             # dealer went bust
             if dealer_total > 21:
                 print('The dealer went bust! ')
@@ -547,4 +581,5 @@ while programRunning:
         # writes out rules one by one
         for rule in rules:
             print(rule, end='')
+        print()
         atMenu, atRules = goBack(atMenu, atRules)

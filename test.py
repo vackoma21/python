@@ -186,3 +186,11 @@ for card in list1['John2']:
                 print('----END----')
         # print(values[playerCard])
 print(cardValues)
+
+print(deck)
+for i in range(0, len(deck)-1):
+    aceCount = deck[i]['value'].count('A')
+
+
+
+print(aceCount)
