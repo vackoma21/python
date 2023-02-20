@@ -36,7 +36,7 @@ class MainWindow(tkinter.Frame):
 
         self.burgerName = tkinter.Entry()
 
-        self.meat = tkinter.OptionMenu(root, *meatOptions)
+        self.meat = tkinter.OptionMenu(root, value="Select an option", *meatOptions)
 
         # display form
         self.meat.pack()
