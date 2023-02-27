@@ -26,6 +26,7 @@ class MainWindow(tkinter.Frame):
         self.burgerName = None
         self.button = None
         self.burgerNameLabel = None
+        self.sauce = None
         self.parent = parent
 
         # grid configuration
@@ -38,13 +39,17 @@ class MainWindow(tkinter.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        meatOptions = ['chicken', 'beef', 'pork', 'duck', 'soy']
+        meatOptions = ['none', 'chicken', 'beef', 'pork', 'duck', 'soy']
         meatDefault = tkinter.StringVar(root)
-        meatDefault.set("none")
+        meatDefault.set(meatOptions[0])
 
         bunOptions = ['plain', 'sesame seed', 'pretzel', 'potato bun', 'brioche']
         bunDefault = tkinter.StringVar(root)
         bunDefault.set(bunOptions[0])
+
+        sauceOptions = ['none', 'ketchup', 'mustard', 'thousand island', 'chili', 'cheese', 'barbecue']
+        sauceDefault = tkinter.StringVar(root)
+        sauceDefault.set(sauceOptions[0])
 
         vegetable = ['tomato', 'cucumber', 'lettuce', 'spinach', 'onion', 'pepper', 'corn', 'mushrooms', 'kale']
         fruit = ['pineapple', 'mango', 'apple', 'peach', 'pear', 'avocado']
@@ -61,6 +66,7 @@ class MainWindow(tkinter.Frame):
 
         self.meat = tkinter.OptionMenu(root, meatDefault, *meatOptions)
         self.bun = tkinter.OptionMenu(root, bunDefault, *bunOptions)
+        self.sauce = tkinter.OptionMenu(root, sauceDefault, *sauceOptions)
         self.vegetable1 = tkinter.Checkbutton(root, text=vegetable[0])
         self.vegetable2 = tkinter.Checkbutton(root, text=vegetable[1])
         self.vegetable3 = tkinter.Checkbutton(root, text=vegetable[2])
@@ -98,6 +104,11 @@ class MainWindow(tkinter.Frame):
         self.vegetable7.pack()
         self.vegetable8.pack()
         self.vegetable9.pack()
+
+        # sauces
+
+        self.saucesLabel.pack()
+        self.sauce.pack()
 
 
 root = tkinter.Tk()
