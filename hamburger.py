@@ -1,20 +1,48 @@
 import tkinter
+import math
+
+# class BurgerWindow(tkinter.Toplevel):
+#
+#     def __int__(self, master=None):
+#         super().__init__(master=root)
+#         self.title("Hamburger!")
+#         self.geometry("800x500")
+#
+#         self.label = tkinter.Label(self, text="Hi")
+#         self.label.pack()
+#
+
+
+class Windows(tkinter.Tk):
+    def __init__(self, *args, **kwargs):
+        tkinter.Tk.__init__(self, *args, **kwargs)
+        self.title("app")
+
+        container = tkinter.Frame(self, height=600, width=400)
+        container.pack(side="top", fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+
+        for F in (MainWindow, BurgerImage):
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+        self.show_frame(MainWindow)
+
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
 
 
 class MainWindow(tkinter.Frame):
-    def __init__(self, parent):
-        super().__init__(parent)
+    def __init__(self, parent, controller):
+        tkinter.Frame.__init__(self, parent)
 
+        self.vegetable_box = None
+        self.create = tkinter.Button(text="create", command=lambda: controller.show_frame(BurgerImage))
         self.ingredients = None
-        self.vegetable1 = None
-        self.vegetable2 = None
-        self.vegetable3 = None
-        self.vegetable4 = None
-        self.vegetable5 = None
-        self.vegetable6 = None
-        self.vegetable7 = None
-        self.vegetable8 = None
-        self.vegetable9 = None
 
         self.meat = None
         self.bun = None
@@ -33,23 +61,40 @@ class MainWindow(tkinter.Frame):
         # self.parent.rowconfigure(0, weight=500)
         # self.parent.rowconfigure(1)
 
-        self.parent.title('A window app')
-        self.parent.geometry("800x500")
+        # self.parent.title('A window app')
+        # self.parent.geometry("800x500")
 
         self.create_widgets()
 
     def create_widgets(self):
-        meatOptions = ['none', 'chicken', 'beef', 'pork', 'duck', 'soy']
-        meatDefault = tkinter.StringVar(root)
-        meatDefault.set(meatOptions[0])
+        def doThis():
+            print("Burger name")
+            print(chosen_burger_name.get())
+            print("Vegetable")
+            for i in range(len(chosen_vegetables)):
+                print(chosen_vegetables[i])
+            print("Meat")
+            print(meat_default.get())
+            print("Sauce")
+            print(sauce_default.get())
+            print("Bun")
+            print(bun_default.get())
+            print()
 
-        bunOptions = ['plain', 'sesame seed', 'pretzel', 'potato bun', 'brioche']
-        bunDefault = tkinter.StringVar(root)
-        bunDefault.set(bunOptions[0])
+        chosen_vegetables = []
+        chosen_burger_name = tkinter.StringVar()
 
-        sauceOptions = ['none', 'ketchup', 'mustard', 'thousand island', 'chili', 'cheese', 'barbecue']
-        sauceDefault = tkinter.StringVar(root)
-        sauceDefault.set(sauceOptions[0])
+        meat_options = ['none', 'chicken', 'beef', 'pork', 'duck', 'soy']
+        meat_default = tkinter.StringVar(root)
+        meat_default.set(meat_options[0])
+
+        bun_options = ['plain', 'sesame seed', 'pretzel', 'potato bun', 'brioche']
+        bun_default = tkinter.StringVar(root)
+        bun_default.set(bun_options[0])
+
+        sauce_options = ['none', 'ketchup', 'mustard', 'thousand island', 'chili', 'cheese', 'barbecue']
+        sauce_default = tkinter.StringVar(root)
+        sauce_default.set(sauce_options[0])
 
         vegetable = ['tomato', 'cucumber', 'lettuce', 'spinach', 'onion', 'pepper', 'corn', 'mushrooms', 'kale']
         fruit = ['pineapple', 'mango', 'apple', 'peach', 'pear', 'avocado']
@@ -62,55 +107,62 @@ class MainWindow(tkinter.Frame):
         self.vegetablesLabel = tkinter.Label(text="Vegetables: ")
         self.saucesLabel = tkinter.Label(text="Sauces: ")
 
-        self.burgerName = tkinter.Entry()
+        self.burgerName = tkinter.Entry(textvariable=chosen_burger_name)
 
-        self.meat = tkinter.OptionMenu(root, meatDefault, *meatOptions)
-        self.bun = tkinter.OptionMenu(root, bunDefault, *bunOptions)
-        self.sauce = tkinter.OptionMenu(root, sauceDefault, *sauceOptions)
-        self.vegetable1 = tkinter.Checkbutton(root, text=vegetable[0])
-        self.vegetable2 = tkinter.Checkbutton(root, text=vegetable[1])
-        self.vegetable3 = tkinter.Checkbutton(root, text=vegetable[2])
-        self.vegetable4 = tkinter.Checkbutton(root, text=vegetable[3])
-        self.vegetable5 = tkinter.Checkbutton(root, text=vegetable[4])
-        self.vegetable6 = tkinter.Checkbutton(root, text=vegetable[5])
-        self.vegetable7 = tkinter.Checkbutton(root, text=vegetable[6])
-        self.vegetable8 = tkinter.Checkbutton(root, text=vegetable[7])
-        self.vegetable9 = tkinter.Checkbutton(root, text=vegetable[8])
+        self.meat = tkinter.OptionMenu(root, meat_default, *meat_options)
+        self.bun = tkinter.OptionMenu(root, bun_default, *bun_options)
+        self.sauce = tkinter.OptionMenu(root, sauce_default, *sauce_options)
 
         # display form
 
         # burger name
-        self.burgerNameLabel.pack()
-        self.burgerName.pack()
+        self.burgerNameLabel.grid(row=0, column=0)
+        self.burgerName.grid(row=1, column=0)
 
-        self.ingredients.pack()
+        self.ingredients.grid(row=2, column=0)
 
         # meat
-        self.meatLabel.pack()
-        self.meat.pack()
+        self.meatLabel.grid(row=3, column=0)
+        self.meat.grid(row=3, column=1)
 
         # bun
-        self.bunLabel.pack()
-        self.bun.pack()
-
-        # vegetables
-        self.vegetablesLabel.pack()
-        self.vegetable1.pack()
-        self.vegetable2.pack()
-        self.vegetable3.pack()
-        self.vegetable4.pack()
-        self.vegetable5.pack()
-        self.vegetable6.pack()
-        self.vegetable7.pack()
-        self.vegetable8.pack()
-        self.vegetable9.pack()
+        self.bunLabel.grid(row=4, column=0)
+        self.bun.grid(row=4, column=1)
 
         # sauces
 
-        self.saucesLabel.pack()
-        self.sauce.pack()
+        self.saucesLabel.grid(row=5, column=0)
+        self.sauce.grid(row=5, column=1)
+
+        # vegetables
+        self.vegetablesLabel.grid(row=6, column=0)
+
+        col = 2
+        for x in range(len(vegetable)):
+            print(x)
+            if col == 1:
+                col = 2
+            else:
+                col = col - 1
+            row = math.ceil(x / 2)
+            if row == 0:
+                row = 1
+            if x >= 2:
+                row = row+1
+            self.vegetable_box = tkinter.Checkbutton(root, text=vegetable[x], variable=vegetable[x], command=lambda i=vegetable[x]: chosen_vegetables.append(i), borderwidth=5, border=2)
+            self.vegetable_box.grid(row=5+row, column=col)
+
+        # bttn
+
+        self.create.grid(row=16, column=0)
+
+
+class BurgerImage(tkinter.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        self.label = tkinter.Label(text="Second page")
 
 
 root = tkinter.Tk()
-app = MainWindow(root)
+app = Windows()
 app.mainloop()
