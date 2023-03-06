@@ -1,11 +1,5 @@
 import random
 import csv
-# leaderboard, write into a new file
-# at the start is a menu (startgame, leaderboard)
-# save cards into a dictionary
-# shuffle is a function in python to shuffle the dictionary
-# always take the 0. card
-# do not use random choice, but random shuffle instead (the dictionary)
 
 
 # Function to get back to the main menu

@@ -1,4 +1,4 @@
-import tkinter
+import tkinter as tk
 import math
 
 # class BurgerWindow(tkinter.Toplevel):
@@ -13,12 +13,12 @@ import math
 #
 
 
-class Windows(tkinter.Tk):
+class Windows(tk.Tk):
     def __init__(self, *args, **kwargs):
-        tkinter.Tk.__init__(self, *args, **kwargs)
+        tk.Tk.__init__(self, *args, **kwargs)
         self.title("app")
 
-        container = tkinter.Frame(self, height=600, width=400)
+        container = tk.Frame(self, height=600, width=400)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -36,12 +36,12 @@ class Windows(tkinter.Tk):
         frame.tkraise()
 
 
-class MainWindow(tkinter.Frame):
+class MainWindow(tk.Frame):
     def __init__(self, parent, controller):
-        tkinter.Frame.__init__(self, parent)
-
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
         self.vegetable_box = None
-        self.create = tkinter.Button(text="create", command=lambda: controller.show_frame(BurgerImage))
+        self.create = tk.Button(text="create", command=lambda: controller.show_frame(BurgerImage))
         self.ingredients = None
 
         self.meat = None
@@ -82,36 +82,35 @@ class MainWindow(tkinter.Frame):
             print()
 
         chosen_vegetables = []
-        chosen_burger_name = tkinter.StringVar()
+        chosen_burger_name = tk.StringVar()
 
         meat_options = ['none', 'chicken', 'beef', 'pork', 'duck', 'soy']
-        meat_default = tkinter.StringVar(root)
+        meat_default = tk.StringVar(root)
         meat_default.set(meat_options[0])
 
         bun_options = ['plain', 'sesame seed', 'pretzel', 'potato bun', 'brioche']
-        bun_default = tkinter.StringVar(root)
+        bun_default = tk.StringVar(root)
         bun_default.set(bun_options[0])
 
         sauce_options = ['none', 'ketchup', 'mustard', 'thousand island', 'chili', 'cheese', 'barbecue']
-        sauce_default = tkinter.StringVar(root)
+        sauce_default = tk.StringVar(root)
         sauce_default.set(sauce_options[0])
 
         vegetable = ['tomato', 'cucumber', 'lettuce', 'spinach', 'onion', 'pepper', 'corn', 'mushrooms', 'kale']
-        fruit = ['pineapple', 'mango', 'apple', 'peach', 'pear', 'avocado']
 
-        self.burgerNameLabel = tkinter.Label(text="Create a name for your very own burger")
-        self.ingredients = tkinter.Label(text="Choose your ingredients: ")
-        self.meatLabel = tkinter.Label(text="Meat: ")
-        self.meatStyleLabel = tkinter.Label(text="Cooking time: ")
-        self.bunLabel = tkinter.Label(text="Bun: ")
-        self.vegetablesLabel = tkinter.Label(text="Vegetables: ")
-        self.saucesLabel = tkinter.Label(text="Sauces: ")
+        self.burgerNameLabel = tk.Label(text="Create a name for your very own burger")
+        self.ingredients = tk.Label(text="Choose your ingredients: ")
+        self.meatLabel = tk.Label(text="Meat: ")
+        self.meatStyleLabel = tk.Label(text="Cooking time: ")
+        self.bunLabel = tk.Label(text="Bun: ")
+        self.vegetablesLabel = tk.Label(text="Vegetables: ")
+        self.saucesLabel = tk.Label(text="Sauces: ")
 
-        self.burgerName = tkinter.Entry(textvariable=chosen_burger_name)
+        self.burgerName = tk.Entry(textvariable=chosen_burger_name)
 
-        self.meat = tkinter.OptionMenu(root, meat_default, *meat_options)
-        self.bun = tkinter.OptionMenu(root, bun_default, *bun_options)
-        self.sauce = tkinter.OptionMenu(root, sauce_default, *sauce_options)
+        self.meat = tk.OptionMenu(root, meat_default, *meat_options)
+        self.bun = tk.OptionMenu(root, bun_default, *bun_options)
+        self.sauce = tk.OptionMenu(root, sauce_default, *sauce_options)
 
         # display form
 
@@ -149,7 +148,7 @@ class MainWindow(tkinter.Frame):
                 row = 1
             if x >= 2:
                 row = row+1
-            self.vegetable_box = tkinter.Checkbutton(root, text=vegetable[x], variable=vegetable[x], command=lambda i=vegetable[x]: chosen_vegetables.append(i), borderwidth=5, border=2)
+            self.vegetable_box = tk.Checkbutton(root, text=vegetable[x], variable=vegetable[x], command=lambda i=vegetable[x]: chosen_vegetables.append(i), borderwidth=5, border=2)
             self.vegetable_box.grid(row=5+row, column=col)
 
         # bttn
@@ -157,12 +156,12 @@ class MainWindow(tkinter.Frame):
         self.create.grid(row=16, column=0)
 
 
-class BurgerImage(tkinter.Frame):
+class BurgerImage(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
-        self.label = tkinter.Label(text="Second page")
+        self.label = tk.Label(text="Second page")
 
 
-root = tkinter.Tk()
+root = tk.Tk()
 app = Windows()
 app.mainloop()
