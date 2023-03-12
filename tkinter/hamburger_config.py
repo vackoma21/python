@@ -34,16 +34,13 @@ class Windows(tk.Tk):
         frame.tkraise()
         print('hi')
 
-    def update_config(self):
-        self.data['name'].get()
-
 
 class MainWindow(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.Label = ttk.Label(self, text="MainWindow")
-        self.Bttn = ttk.Button(self, text="img", command=lambda: [get_values_fce(), controller.show_frame(BurgerImage)])
+        self.Bttn = ttk.Button(self, text="img", command=lambda: [controller.show_frame(BurgerImage), get_values_fce(), clear_inputs_fce()])
 
         self.Label.grid(row=11, column=4, padx=10, pady=10)
         self.Bttn.grid(row=12, column=4, padx=10, pady=10)
@@ -156,10 +153,6 @@ class MainWindow(tk.Frame):
             self.controller.data['meat'] = meat_default.get()
             self.controller.data['sauce'] = sauce_default.get()
 
-            # nameL = BurgerImage(parent, controller)
-            main_window = app
-            text = BurgerImage(parent, controller).nameLa
-
             # return self.name, self.veggies, bunV, meatV, sauceV
 
         def clear_inputs_fce():
@@ -195,15 +188,8 @@ class BurgerImage(tk.Frame):
         self.Bttn = ttk.Button(self, text="mw", command=lambda: [controller.show_frame(MainWindow), print(self.controller.data['name'].get())])
         self.Label.grid(row=11, column=4, padx=10, pady=10)
         self.Bttn.grid(row=12, column=4, padx=10, pady=10)
-        # name = self.controller.data['name'].get()
-        # self.nameLa = tk.Label(self, textvariable=name)
-        #
-        # self.nameLa.grid(row=0, column=0)
-        self.widgets()
-
-    def widgets(self):
-        self.name = self.controller.data['name'].get()
-        self.nameLa = tk.Label(self, textvariable=self.name)
+        name = self.controller.data['name'].get()
+        self.nameLa = tk.Label(self, textvariable=name)
 
         self.nameLa.grid(row=0, column=0)
 
