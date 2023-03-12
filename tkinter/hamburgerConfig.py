@@ -156,9 +156,11 @@ class MainWindow(tk.Frame):
             self.controller.data['meat'] = meat_default.get()
             self.controller.data['sauce'] = sauce_default.get()
 
+            global nameLa
             # nameL = BurgerImage(parent, controller)
             main_window = app
             text = BurgerImage(parent, controller).nameLa
+            text["text"] = self.controller.data['name']
 
             # return self.name, self.veggies, bunV, meatV, sauceV
 
@@ -191,6 +193,7 @@ class BurgerImage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.nameLa = tk.Label(self, text='LABEL')
         self.Label = ttk.Label(self, text="BurgerImage")
         self.Bttn = ttk.Button(self, text="mw", command=lambda: [controller.show_frame(MainWindow), print(self.controller.data['name'].get())])
         self.Label.grid(row=11, column=4, padx=10, pady=10)
@@ -202,8 +205,10 @@ class BurgerImage(tk.Frame):
         self.widgets()
 
     def widgets(self):
-        self.name = self.controller.data['name'].get()
-        self.nameLa = tk.Label(self, textvariable=self.name)
+        global nameLa
+        # self.name = self.controller.data['name'].get()
+        self.nameLa = tk.Label(self, text='LABEL')
+        # self.nameLa["text"] = 'HU'
 
         self.nameLa.grid(row=0, column=0)
 
