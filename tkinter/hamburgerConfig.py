@@ -2,13 +2,14 @@ import tkinter as tk
 from tkinter import ttk
 import math
 
-
+# window class that holds all the frames
 class Windows(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title("Hamburger Config")
-
+        
+        # defines a dict of values shared within the whole app
         self.data = {
             "name": tk.StringVar(),
             "vegetables": [],
@@ -16,28 +17,33 @@ class Windows(tk.Tk):
             "bun": tk.StringVar(),
             "sauce": tk.StringVar(),
         }
-
+        
+        # creates the main frame in which other frames reside
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
+        # dictionary of all frames (excluding the Windows one)
         self.frames = {}
 
         for F in (MainWindow, BurgerImage):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
+        # calls function that tkraise the next frame on top
         self.show_frame(MainWindow)
-
+    
+    # function that puts inputted frame on top
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
-        print('hi')
+        # print('hi')
 
     def update_config(self):
         self.data['name'].get()
 
 
+# class with user inputs about the custom hamburger
 class MainWindow(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -102,7 +108,8 @@ class MainWindow(tk.Frame):
 
         # vegetables
         vegetablesLabel.grid(row=6, column=0, sticky="w")
-
+       
+        # appends only checked boxes
         def append_vegetable_fce():
             chosen_vegetables = []
             for index in veg:
@@ -110,8 +117,10 @@ class MainWindow(tk.Frame):
                     chosen_vegetables.append(vegetable[index])
             print(chosen_vegetables)
             return chosen_vegetables
+        # dict with the final values 
         veg = {}
         col = 2
+        # loop that creates vegetable checkboxes
         for x in range(len(vegetable)):
             if col == 1:
                 col = 2
