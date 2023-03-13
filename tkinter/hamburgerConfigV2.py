@@ -75,7 +75,7 @@ for x in range(len(vegetable)):
     if x >= 2:
         row = row+1
     vegetable_box = tk.Checkbutton(
-        root, text=vegetable[x], variable=vegetable[x],
+        root, text=vegetable[x],
         command=lambda i=vegetable[x]: chosen_vegetables.append(i),
         borderwidth=5, border=2
     )

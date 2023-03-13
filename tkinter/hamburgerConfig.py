@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import math
+from PIL import ImageTk, Image
+
 
 # window class that holds all the frames
 class Windows(tk.Tk):
@@ -16,6 +18,7 @@ class Windows(tk.Tk):
             "meat": tk.StringVar(),
             "bun": tk.StringVar(),
             "sauce": tk.StringVar(),
+            "time": tk.StringVar()
         }
         
         # creates the main frame in which other frames reside
@@ -57,17 +60,21 @@ class MainWindow(tk.Frame):
         # self.burgerNameLabel1 = ttk.Label(self, text="Create a name for your very own burger")
         # self.burgerNameLabel1.grid(row=2, column=4, padx=10, pady=10)
 
-        meat_options = ['none', 'chicken', 'beef', 'pork', 'duck', 'soy']
+        meat_options = ['none', 'none', 'chicken', 'beef', 'pork', 'duck', 'soy']
         meat_default = tk.StringVar(self)
         meat_default.set(meat_options[0])
 
-        bun_options = ['plain', 'sesame seed', 'pretzel', 'potato bun', 'brioche']
+        bun_options = ['plain', 'plain', 'sesame seed', 'pretzel', 'potato bun', 'brioche']
         bun_default = tk.StringVar(self)
         bun_default.set(bun_options[0])
 
-        sauce_options = ['none', 'ketchup', 'mustard', 'thousand island', 'chili', 'cheese', 'barbecue']
+        sauce_options = ['none', 'none', 'ketchup', 'mustard', 'thousand island', 'chili', 'cheese', 'barbecue']
         sauce_default = tk.StringVar(self)
         sauce_default.set(sauce_options[0])
+
+        meatStyle_options = ['well cooked', 'well cooked', 'health risk']
+        meatStyle_default = tk.StringVar(self)
+        meatStyle_default.set(meatStyle_options[0])
 
         vegetable = ['tomato', 'cucumber', 'lettuce', 'spinach', 'onion', 'pepper', 'corn', 'mushrooms', 'kale']
 
@@ -83,6 +90,7 @@ class MainWindow(tk.Frame):
         meat = ttk.OptionMenu(self, meat_default, *meat_options)
         bun = ttk.OptionMenu(self, bun_default, *bun_options)
         sauce = ttk.OptionMenu(self, sauce_default, *sauce_options)
+        meatStyle = ttk.OptionMenu(self, meatStyle_default, *meatStyle_options)
 
         burgerNameLabel.grid(row=0, column=0)
         self.burgerName.grid(row=0, column=1)
@@ -96,6 +104,10 @@ class MainWindow(tk.Frame):
         # meat
         meatLabel.grid(row=3, column=0, sticky="w")
         meat.grid(row=3, column=1, sticky="w")
+
+        # meat style
+        meatStyleLabel.grid(row=3, column=2, sticky='w')
+        meatStyle.grid(row=3, column=3, sticky='w')
 
         # bun
         bunLabel.grid(row=4, column=0, sticky="w")
@@ -165,11 +177,10 @@ class MainWindow(tk.Frame):
             self.controller.data['meat'] = meat_default.get()
             self.controller.data['sauce'] = sauce_default.get()
 
-            global nameLa
             # nameL = BurgerImage(parent, controller)
-            main_window = app
-            text = BurgerImage(parent, controller).nameLa
-            text["text"] = self.controller.data['name']
+            # main_window = app
+            # text = BurgerImage(parent, controller).nameLa
+            # text["text"] = self.controller.data['name']
 
             # return self.name, self.veggies, bunV, meatV, sauceV
 
@@ -202,24 +213,85 @@ class BurgerImage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+
+        def widgets_fun():
+            name = self.controller.data['name'].get()
+            sauce = self.controller.data['sauce']
+            meat = self.controller.data['meat']
+            bun = self.controller.data['bun']
+            cooking_time = self.controller.data['time']
+            vegetables = self.controller.data['vegetable']
+
+            if cooking_time == 'well cooked' and (meat != 'soy' or meat != 'none'):
+                meatPNG = Image.open("hamburger/meat/" + meat + "_cooked.png")
+            elif meat != 'soy' and meat != 'none':
+                meatPNG = Image.open("hamburger/meat/" + meat + "_uncooked.png")
+            elif meat == 'soy':
+                meatPNG = Image.open("hamburger/meat/" + meat + ".png")
+            else:
+                meatPNG = None
+            bun_topPNG = Image.open("hamburger/bun/" + bun + "_top.png")
+            bun_topPNG = bun_topPNG.resize((350, 50))
+            bun_topImg = ImageTk.PhotoImage(bun_topPNG)
+            bunTopL = tk.Label(self, image=bun_topImg)
+            bunTopL.image = bun_topImg
+
+            bun_bottomPNG = Image.open("hamburger/bun/" + bun + "_bottom.png")
+            bun_bottomPNG = bun_bottomPNG.resize((350, 40))
+            bun_bottomImg = ImageTk.PhotoImage(bun_bottomPNG)
+            bun_bottomL = tk.Label(self, image=bun_bottomImg)
+            bun_bottomL.image = bun_bottomImg
+
+            burgerName = tk.Label(self, text=name)
+            burgerName.grid(row=14, column=0)
+            bunTopL.grid(row=15, column=0)
+
+            if len(vegetables) != 0:
+
+                i = 1
+                row = 16
+                for veggie in vegetables:
+                    row = 15+i
+
+                    veggiePNG = Image.open("hamburger/veggies/" + veggie + ".png")
+                    veggiePNG = veggiePNG.resize((350, 40))
+                    veggieImg = ImageTk.PhotoImage(veggiePNG)
+                    veggieL = tk.Label(self, image=veggieImg)
+                    veggieL.image = bun_bottomImg
+
+                    veg = tk.Label(self, text=veggie)
+                    veg.grid(row=row, column=0)
+                    i = i + 1
+
+            if meatPNG:
+                meatPNG = meatPNG.resize((200, 50), Image.LANCZOS)
+                meatImg = ImageTk.PhotoImage(meatPNG)
+                meatL = tk.Label(self, image=meatImg)
+                meatL.image = meatImg
+                meatL.grid(row=row+1, column=0)
+
+            if sauce != 'none':
+                saucePNG = Image.open("hamburger/sauce/" + sauce + ".png")
+                saucePNG = saucePNG.resize((200, 25), Image.LANCZOS)
+                sauceImg = ImageTk.PhotoImage(saucePNG)
+                sauceL = tk.Label(self, image=sauceImg)
+                sauceL.image = sauceImg
+                sauceL.grid(row=16 + i, column=0)
+            bun_bottomL.grid(row=17+i, column=0)
+
         self.nameLa = tk.Label(self, text='LABEL')
         self.Label = ttk.Label(self, text="BurgerImage")
-        self.Bttn = ttk.Button(self, text="mw", command=lambda: [controller.show_frame(MainWindow), print(self.controller.data['name'].get())])
+        self.Bttn = ttk.Button(self, text="back", command=lambda: [controller.show_frame(MainWindow)])
         self.Label.grid(row=11, column=4, padx=10, pady=10)
         self.Bttn.grid(row=12, column=4, padx=10, pady=10)
+
+        self.showBttn = tk.Button(self, text='update', command=lambda: widgets_fun())
+        self.showBttn.grid(row=0, column=0)
         # name = self.controller.data['name'].get()
         # self.nameLa = tk.Label(self, textvariable=name)
         #
         # self.nameLa.grid(row=0, column=0)
-        self.widgets()
-
-    def widgets(self):
-        global nameLa
-        # self.name = self.controller.data['name'].get()
-        self.nameLa = tk.Label(self, text='LABEL')
-        # self.nameLa["text"] = 'HU'
-
-        self.nameLa.grid(row=0, column=0)
+        # self.widgets()
 
 
 app = Windows()
