@@ -20,6 +20,7 @@ def putNumber(number):
 def clearScreen():
     screen.delete(0, 'end')
 
+#
 
 def delLast():
     current = screen.get()
