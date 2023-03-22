@@ -62,12 +62,27 @@ def calculate():
 
 root = Tk()
 root.title("Calculator")
+root.geometry("250x400")
 
-screen = Entry(root, width=36, borderwidth=5)
+root.rowconfigure(0, weight=1)
+root.rowconfigure(1, weight=1)
+root.rowconfigure(2, weight=1)
+root.rowconfigure(3, weight=1)
+root.rowconfigure(4, weight=1)
+root.rowconfigure(5, weight=1)
+root.rowconfigure(6, weight=1)
+
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.columnconfigure(2, weight=1)
+
+screen = Entry(root, width=36, borderwidth=5, font=28)
 plusBttn = Button(root, text="+", pady=20, padx=29, command=lambda i='+': doOperation(i))
 minusBttn = Button(root, text="-", pady=20, padx=29, command=lambda i='-': doOperation(i))
 multiBttn = Button(root, text="*", pady=20, padx=29, command=lambda i='*': doOperation(i))
 diviBttn = Button(root, text="/", pady=20, padx=29, command=lambda i='/': doOperation(i))
+sqrtBttn = Button(root, text="√", pady=20, padx=29, command=lambda i='**': doOperation(i))
+toBttn = Button(root, text="^", pady=20, padx=29, command=lambda i='**': doOperation(i))
 
 
 dec_pointBttn = Button(root, text='.', pady=20, padx=29, command=lambda j='.': putNumber(j))
@@ -88,20 +103,20 @@ for x in range(1, nums+2):
     numberPadBttn = Button(root, text=nums, pady=20, padx=30, command=lambda j=nums: putNumber(j))
 
     if nums != 0:
-        numberPadBttn.grid(row=row, column=col)
+        numberPadBttn.grid(row=row, column=col, sticky="NSEW")
     else:
-        numberPadBttn.grid(row=row, column=0)
+        numberPadBttn.grid(row=row, column=0, sticky="NSEW")
 
     nums = nums - 1
 
-screen.grid(row=0, column=0, columnspan=3)
-plusBttn.grid(row=4, column=1)
-minusBttn.grid(row=4, column=2)
-equalBttn.grid(row=5, column=0)
-multiBttn.grid(row=5, column=1)
-diviBttn.grid(row=5, column=2)
+screen.grid(row=0, column=0, columnspan=3, sticky="NSEW", pady=8)
+plusBttn.grid(row=4, column=1, sticky="NSEW")
+minusBttn.grid(row=4, column=2, sticky="NSEW")
+equalBttn.grid(row=5, column=0, sticky="NSEW")
+multiBttn.grid(row=5, column=1, sticky="NSEW")
+diviBttn.grid(row=5, column=2, sticky="NSEW")
 
-delBttn.grid(row=6, column=0)
-clearBttn.grid(row=6, column=1, columnspan=2)
+delBttn.grid(row=6, column=0, sticky="NSEW")
+clearBttn.grid(row=6, column=1, columnspan=2, sticky="NSEW")
 
 root.mainloop()
