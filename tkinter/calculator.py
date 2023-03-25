@@ -4,8 +4,8 @@ import sympy
 
 numOp = []
 
-# solution for when user inputs operation first
 
+# solution for when user inputs operation first
 def putNumber(number):
     # print(number)
     current = screen.get()
@@ -19,8 +19,8 @@ def putNumber(number):
 
 def clearScreen():
     screen.delete(0, 'end')
+    numOp.clear()
 
-#
 
 def delLast():
     current = screen.get()
@@ -32,10 +32,18 @@ def doOperation(operation):
     # if operation == '+':
     if screen.get()[:1] in '+-*/':
         print('operation first')
-    while screen.get()[:1] == '0':
-        screen.delete(0, 1)
-        print('ZERO')
-    numOp.append([screen.get(), operation])
+
+    if screen.get()[:1] == "0":
+        if all(char == screen.get()[0] for char in screen.get()):
+            num = screen.get()[:1]
+            screen.delete(0, END)
+            screen.insert(0, num)
+        else:
+            while screen.get()[:1] == '0':
+                screen.delete(0, 1)
+    print(screen.get())
+    if screen.get().isnumeric():
+        numOp.append([screen.get(), operation])
     screen.delete(0, 'end')
     screen.insert(0, operation)
     print(operation)
@@ -50,14 +58,19 @@ def calculate():
     for val in numOp:
         equation = equation + val[0] + val[1]
     equation = equation + lastNum
-    print(equation)
-    solve = sympy.sympify(equation)
-    solve2 = sympy.solve(equation)
-    print(solve)
-    print(solve2)
-    screen.delete(0, 'end')
-    screen.insert(0, solve)
-    numOp.clear()
+    if len(equation) > 1:
+        print(equation)
+        solve = sympy.sympify(equation)
+        solve2 = sympy.solve(equation)
+        print(solve)
+        print(solve2)
+        solveStr = str(solve.evalf())
+        print(solveStr)
+        if solveStr != "0":
+            solveStr = solveStr.rstrip('0.')
+        screen.delete(0, 'end')
+        screen.insert(0, solveStr)
+        numOp.clear()
 
 
 root = Tk()
