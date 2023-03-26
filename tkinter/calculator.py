@@ -41,9 +41,13 @@ def doOperation(operation):
         else:
             while screen.get()[:1] == '0':
                 screen.delete(0, 1)
-    print(screen.get())
+    if operation == "√":
+        number = "1/" + screen.get()
+    else:
+        number = screen.get()
+    print(number)
     if screen.get().isnumeric():
-        numOp.append([screen.get(), operation])
+        numOp.append([number, operation])
     screen.delete(0, 'end')
     screen.insert(0, operation)
     print(operation)
@@ -94,7 +98,7 @@ plusBttn = Button(root, text="+", pady=20, padx=29, command=lambda i='+': doOper
 minusBttn = Button(root, text="-", pady=20, padx=29, command=lambda i='-': doOperation(i))
 multiBttn = Button(root, text="*", pady=20, padx=29, command=lambda i='*': doOperation(i))
 diviBttn = Button(root, text="/", pady=20, padx=29, command=lambda i='/': doOperation(i))
-sqrtBttn = Button(root, text="√", pady=20, padx=29, command=lambda i='**': doOperation(i))
+sqrtBttn = Button(root, text="√", pady=20, padx=29, command=lambda i='√': doOperation(i))
 toBttn = Button(root, text="^", pady=20, padx=29, command=lambda i='**': doOperation(i))
 
 
