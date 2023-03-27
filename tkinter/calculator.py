@@ -74,8 +74,9 @@ def calculate():
     if lastNum in '+-/*^':
         lastNum = ''
     # for cases when the user types in the equation
-    if lastNum[-1] in '+-/*^':
-        lastNum = lastNum[:-1] + ''
+    if len(screen.get()) != 0:
+        if lastNum[-1] in '+-/*^':
+            lastNum = lastNum[:-1] + ''
     equation = ''
     for val in numOp:
         equation = equation + val[0] + val[1]
@@ -87,6 +88,8 @@ def calculate():
 
     if len(equation) > 0:
         equation = equation.replace("^", "**")
+        if equation[-1] in '+-/*^':
+            equation = equation[:-1]
 
         solve = sympy.sympify(equation)
         solveStr = str(solve.evalf())
@@ -115,6 +118,7 @@ def keyNumber(key):
 root = Tk()
 root.title("Calculator")
 root.geometry("250x400")
+root.configure(bg="#404040")
 
 root.rowconfigure(0, weight=1)
 root.rowconfigure(1, weight=1)
@@ -128,21 +132,60 @@ root.columnconfigure(1, weight=1)
 root.columnconfigure(2, weight=1)
 root.columnconfigure(3, weight=1)
 
-screen = Entry(root, width=36, borderwidth=2, font=28)
+screen = Entry(root,
+               width=36, borderwidth=5, font=28,
+               bg="#202020", fg="#E0E0E0",
+               relief="solid", insertbackground='white')
 screen.bind('<Key>', keyNumber)
 
-plusBttn = Button(root, text="+", pady=20, padx=29, font=21, command=lambda i='+': doOperation(i))
-minusBttn = Button(root, text="-", pady=20, padx=29, font=21, command=lambda i='-': doOperation(i))
-multiBttn = Button(root, text="*", pady=20, padx=29, font=21, command=lambda i='*': doOperation(i))
-diviBttn = Button(root, text="/", pady=20, padx=29, font=21, command=lambda i='/': doOperation(i))
-sqrtBttn = Button(root, text="√", pady=20, padx=29, font=21, command=lambda i='√': doOperation(i))
-toBttn = Button(root, text="^", pady=20, padx=29, font=21, command=lambda i='**': doOperation(i))
+plusBttn = Button(root,
+                  text="+", pady=20, padx=29, font=21,
+                  relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                  activebackground='#202020', activeforeground="#E0E0E0",
+                  command=lambda i='+': doOperation(i))
+minusBttn = Button(root,
+                   text="-", pady=20, padx=29, font=21,
+                   relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                   activebackground='#202020', activeforeground="#E0E0E0",
+                   command=lambda i='-': doOperation(i))
+multiBttn = Button(root,
+                   text="*", pady=20, padx=29, font=21,
+                   relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                   activebackground='#202020', activeforeground="#E0E0E0",
+                   command=lambda i='*': doOperation(i))
+diviBttn = Button(root,
+                  text="/", pady=20, padx=29, font=21,
+                  relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                  activebackground='#202020', activeforeground="#E0E0E0",
+                  command=lambda i='/': doOperation(i))
+sqrtBttn = Button(root,
+                  text="√", pady=20, padx=29, font=21,
+                  relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                  activebackground='#202020', activeforeground="#E0E0E0",
+                  command=lambda i='√': doOperation(i))
+toBttn = Button(root,
+                text="^", pady=20, padx=29, font=21,
+                relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                activebackground='#202020', activeforeground="#E0E0E0",
+                command=lambda i='**': doOperation(i))
 
 # dec_pointBttn = Button(root, text='.', pady=20, padx=29, command=lambda j='.': putNumber(j))
 
-equalBttn = Button(root, text="=", pady=20, padx=29, font=21, command=calculate)
-clearBttn = Button(root, text="CE", pady=20, padx=25, font=21, command=clearScreen)
-delBttn = Button(root, text='del', pady=20, padx=25, font=21, command=delLast)
+equalBttn = Button(root,
+                   text="=", pady=20, padx=29, font=21,
+                   relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                   activebackground='#202020', activeforeground="#E0E0E0",
+                   command=calculate)
+clearBttn = Button(root,
+                   text="CE", pady=20, padx=25, font=21,
+                   relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                   activebackground='#202020', activeforeground="#E0E0E0",
+                   command=clearScreen)
+delBttn = Button(root,
+                 text='del', pady=20, padx=25, font=21,
+                 relief="solid", borderwidth=3, bg="#202020", fg="#E0E0E0",
+                 activebackground='#202020', activeforeground="#E0E0E0",
+                 command=delLast)
 
 col = 3
 nums = 9
@@ -153,7 +196,11 @@ for x in range(1, nums+2):
         col = col - 1
     row = math.ceil(x/3)
 
-    numberPadBttn = Button(root, text=nums, pady=20, padx=30, font=21, command=lambda j=nums: putNumber(j))
+    numberPadBttn = Button(root,
+                           text=nums, pady=20, padx=30, font=21,
+                           borderwidth=3, relief="solid", bg="#202020", fg="#E0E0E0",
+                           activebackground='#202020', activeforeground="#E0E0E0",
+                           command=lambda j=nums: putNumber(j))
 
     if nums != 0:
         numberPadBttn.grid(row=row, column=col, sticky="NSEW")
