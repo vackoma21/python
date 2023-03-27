@@ -2,11 +2,14 @@ from tkinter import *
 import math
 import sympy
 
+# save numbers and operators inside a list
 numOp = []
+# holds the **(1/2) if presssed
 cacheOp = []
 
+validKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/", "+", "-", "*", "^", "(", ")"]
 
-# solution for when user inputs operation first
+# displays clicked number to the screen
 def putNumber(number):
     # print(number)
     current = screen.get()
@@ -15,59 +18,63 @@ def putNumber(number):
         current = screen.get()
     screen.delete(0, END)
     screen.insert(0, str(current) + str(number))
-    print(numOp)
 
 
+# function that clears the screens input
 def clearScreen():
     screen.delete(0, 'end')
     numOp.clear()
 
-
+# function to delete last char on the screen
 def delLast():
     current = screen.get()
     screen.delete(0, 'end')
     screen.insert(0, current[:-1])
 
 
+# adds num inserted onto the screen and appends it to
+# a numOp list together with the operator
 def doOperation(operation):
-    # if operation == '+':
-    if screen.get()[:1] in '+-*/':
-        print('operation first')
-
     if screen.get()[:1] == "0":
+        # checks if all chars on the screen are '0'
         if all(char == screen.get()[0] for char in screen.get()):
             num = screen.get()[:1]
             screen.delete(0, END)
             screen.insert(0, num)
-        else:
+        else:   # not all chars on the screen are '0'
+            # removes all unnecessary zeros
             while screen.get()[:1] == '0':
                 screen.delete(0, 1)
+    # save the "√" if user inputs it into cacheOp
     if operation == "√":
         operation = "**(1/2)"
-        number = screen.get()
         cacheOp.append(operation)
         return 'break'
-    else:
+    else:   # operation isn't "√"
         number = screen.get()
+    # if user inputted a number and operation isn't "√"
     if screen.get().isnumeric() and len(cacheOp) == 0:
-        print(operation)
         numOp.append([number, operation])
+    # user inputted operation "√", delete it from cacheOp,
+    # append the operation only, othe leave blank
     elif len(cacheOp) > 0:
         numOp.append([number, cacheOp[0]])
         cacheOp.pop(0)
-        print(len(cacheOp))
-        print("CA")
         numOp.append([operation, ""])
+    # clear the screen
     screen.delete(0, 'end')
-    # screen.insert(0, operation)
-    # print(operation)
 
 
+# solves the created equation
 def calculate():
     solve = ''
     lastNum = screen.get()
-    if lastNum in '+-/*':
-        lastNum = '0'
+    # if user inputs op. sign at the end
+    if lastNum in '+-/*^':
+        lastNum = ''
+    # for cases when the user types in the equation
+    if lastNum[-1] in '+-/*^':
+        lastNum = lastNum[:-1] + ''
     equation = ''
     for val in numOp:
         equation = equation + val[0] + val[1]
@@ -78,13 +85,10 @@ def calculate():
         cacheOp.clear()
 
     if len(equation) > 0:
-        print(equation)
+        equation = equation.replace("^", "**")
+
         solve = sympy.sympify(equation)
-        solve2 = sympy.solve(equation)
-        print(solve)
-        print(solve2)
         solveStr = str(solve.evalf())
-        print(solveStr)
         if solveStr != "0":
             solveStr = solveStr.rstrip('0.')
         screen.delete(0, 'end')
@@ -95,12 +99,14 @@ def calculate():
 def keyNumber(key):
     current = screen.get()
     screen.delete(0, END)
-    if key.char in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/", "+", "-", "*"):
-        print(key.char)
-        print("NUM")
+    if key.char in validKeys or key.keysym == "BackSpace":
+        screen.insert(0, current)
+    elif key.keysym == "Return":
+        screen.insert(0, current)
+        calculate()
+    elif key.keysym == ("Left" or "Right"):
         screen.insert(0, current)
     else:
-        print(key.char)
         screen.insert(0, current)
         return 'break'
 
@@ -115,28 +121,27 @@ root.rowconfigure(2, weight=1)
 root.rowconfigure(3, weight=1)
 root.rowconfigure(4, weight=1)
 root.rowconfigure(5, weight=1)
-root.rowconfigure(6, weight=1)
 
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.columnconfigure(2, weight=1)
 root.columnconfigure(3, weight=1)
 
-screen = Entry(root, width=36, borderwidth=5, font=28)
-screen.bind('<KeyPress>', keyNumber)
+screen = Entry(root, width=36, borderwidth=2, font=28)
+screen.bind('<Key>', keyNumber)
 
-plusBttn = Button(root, text="+", pady=20, padx=29, command=lambda i='+': doOperation(i))
-minusBttn = Button(root, text="-", pady=20, padx=29, command=lambda i='-': doOperation(i))
-multiBttn = Button(root, text="*", pady=20, padx=29, command=lambda i='*': doOperation(i))
-diviBttn = Button(root, text="/", pady=20, padx=29, command=lambda i='/': doOperation(i))
-sqrtBttn = Button(root, text="√", pady=20, padx=29, command=lambda i='√': doOperation(i))
-toBttn = Button(root, text="^", pady=20, padx=29, command=lambda i='**': doOperation(i))
+plusBttn = Button(root, text="+", pady=20, padx=29, font=21, command=lambda i='+': doOperation(i))
+minusBttn = Button(root, text="-", pady=20, padx=29, font=21, command=lambda i='-': doOperation(i))
+multiBttn = Button(root, text="*", pady=20, padx=29, font=21, command=lambda i='*': doOperation(i))
+diviBttn = Button(root, text="/", pady=20, padx=29, font=21, command=lambda i='/': doOperation(i))
+sqrtBttn = Button(root, text="√", pady=20, padx=29, font=21, command=lambda i='√': doOperation(i))
+toBttn = Button(root, text="^", pady=20, padx=29, font=21, command=lambda i='**': doOperation(i))
 
 # dec_pointBttn = Button(root, text='.', pady=20, padx=29, command=lambda j='.': putNumber(j))
 
-equalBttn = Button(root, text="=", pady=20, padx=29, command=calculate)
-clearBttn = Button(root, text="CE", pady=20, padx=25, command=clearScreen)
-delBttn = Button(root, text='del', pady=20, padx=25, command=delLast)
+equalBttn = Button(root, text="=", pady=20, padx=29, font=21, command=calculate)
+clearBttn = Button(root, text="CE", pady=20, padx=25, font=21, command=clearScreen)
+delBttn = Button(root, text='del', pady=20, padx=25, font=21, command=delLast)
 
 col = 3
 nums = 9
@@ -147,7 +152,7 @@ for x in range(1, nums+2):
         col = col - 1
     row = math.ceil(x/3)
 
-    numberPadBttn = Button(root, text=nums, pady=20, padx=30, command=lambda j=nums: putNumber(j))
+    numberPadBttn = Button(root, text=nums, pady=20, padx=30, font=21, command=lambda j=nums: putNumber(j))
 
     if nums != 0:
         numberPadBttn.grid(row=row, column=col, sticky="NSEW")
