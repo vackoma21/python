@@ -9,6 +9,7 @@ cacheOp = []
 
 validKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/", "+", "-", "*", "^", "(", ")"]
 
+
 # displays clicked number to the screen
 def putNumber(number):
     # print(number)
@@ -24,6 +25,7 @@ def putNumber(number):
 def clearScreen():
     screen.delete(0, 'end')
     numOp.clear()
+
 
 # function to delete last char on the screen
 def delLast():
@@ -67,7 +69,6 @@ def doOperation(operation):
 
 # solves the created equation
 def calculate():
-    solve = ''
     lastNum = screen.get()
     # if user inputs op. sign at the end
     if lastNum in '+-/*^':
