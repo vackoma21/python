@@ -3,6 +3,7 @@ import math
 import sympy
 
 numOp = []
+cacheOp = []
 
 
 # solution for when user inputs operation first
@@ -42,15 +43,24 @@ def doOperation(operation):
             while screen.get()[:1] == '0':
                 screen.delete(0, 1)
     if operation == "√":
-        number = "1/" + screen.get()
+        operation = "**(1/2)"
+        number = screen.get()
+        cacheOp.append(operation)
+        return 'break'
     else:
         number = screen.get()
-    print(number)
-    if screen.get().isnumeric():
+    if screen.get().isnumeric() and len(cacheOp) == 0:
+        print(operation)
         numOp.append([number, operation])
+    elif len(cacheOp) > 0:
+        numOp.append([number, cacheOp[0]])
+        cacheOp.pop(0)
+        print(len(cacheOp))
+        print("CA")
+        numOp.append([operation, ""])
     screen.delete(0, 'end')
-    screen.insert(0, operation)
-    print(operation)
+    # screen.insert(0, operation)
+    # print(operation)
 
 
 def calculate():
@@ -61,8 +71,13 @@ def calculate():
     equation = ''
     for val in numOp:
         equation = equation + val[0] + val[1]
-    equation = equation + lastNum
-    if len(equation) > 1:
+    if len(cacheOp) == 0:
+        equation = equation + lastNum
+    else:
+        equation = equation + lastNum + cacheOp[0]
+        cacheOp.clear()
+
+    if len(equation) > 0:
         print(equation)
         solve = sympy.sympify(equation)
         solve2 = sympy.solve(equation)
@@ -75,6 +90,19 @@ def calculate():
         screen.delete(0, 'end')
         screen.insert(0, solveStr)
         numOp.clear()
+
+
+def keyNumber(key):
+    current = screen.get()
+    screen.delete(0, END)
+    if key.char in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "/", "+", "-", "*"):
+        print(key.char)
+        print("NUM")
+        screen.insert(0, current)
+    else:
+        print(key.char)
+        screen.insert(0, current)
+        return 'break'
 
 
 root = Tk()
@@ -92,8 +120,11 @@ root.rowconfigure(6, weight=1)
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.columnconfigure(2, weight=1)
+root.columnconfigure(3, weight=1)
 
 screen = Entry(root, width=36, borderwidth=5, font=28)
+screen.bind('<KeyPress>', keyNumber)
+
 plusBttn = Button(root, text="+", pady=20, padx=29, command=lambda i='+': doOperation(i))
 minusBttn = Button(root, text="-", pady=20, padx=29, command=lambda i='-': doOperation(i))
 multiBttn = Button(root, text="*", pady=20, padx=29, command=lambda i='*': doOperation(i))
@@ -101,11 +132,10 @@ diviBttn = Button(root, text="/", pady=20, padx=29, command=lambda i='/': doOper
 sqrtBttn = Button(root, text="√", pady=20, padx=29, command=lambda i='√': doOperation(i))
 toBttn = Button(root, text="^", pady=20, padx=29, command=lambda i='**': doOperation(i))
 
-
-dec_pointBttn = Button(root, text='.', pady=20, padx=29, command=lambda j='.': putNumber(j))
+# dec_pointBttn = Button(root, text='.', pady=20, padx=29, command=lambda j='.': putNumber(j))
 
 equalBttn = Button(root, text="=", pady=20, padx=29, command=calculate)
-clearBttn = Button(root, text="CE", pady=20, padx=80, command=clearScreen)
+clearBttn = Button(root, text="CE", pady=20, padx=25, command=clearScreen)
 delBttn = Button(root, text='del', pady=20, padx=25, command=delLast)
 
 col = 3
@@ -126,14 +156,18 @@ for x in range(1, nums+2):
 
     nums = nums - 1
 
-screen.grid(row=0, column=0, columnspan=3, sticky="NSEW", pady=8)
+screen.grid(row=0, column=0, columnspan=4, sticky="NSEW", pady=8)
 plusBttn.grid(row=4, column=1, sticky="NSEW")
 minusBttn.grid(row=4, column=2, sticky="NSEW")
 equalBttn.grid(row=5, column=0, sticky="NSEW")
 multiBttn.grid(row=5, column=1, sticky="NSEW")
 diviBttn.grid(row=5, column=2, sticky="NSEW")
+sqrtBttn.grid(row=1, column=3, sticky="NSEW")
+toBttn.grid(row=2, column=3, sticky="NSEW")
 
-delBttn.grid(row=6, column=0, sticky="NSEW")
-clearBttn.grid(row=6, column=1, columnspan=2, sticky="NSEW")
+# dec_pointBttn.grid(row=3, column=3, sticky="NSEW")
+
+delBttn.grid(row=3, column=3, sticky="NSEW")
+clearBttn.grid(row=4, column=3, rowspan=2, sticky="NSEW")
 
 root.mainloop()
