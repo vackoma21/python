@@ -43,18 +43,42 @@ import logging
 FORMAT = '%(asctime)s %(levelname)s %(message)s'
 
 logging.basicConfig(
-    filemode="a",
+    filemode="w",
     filename="export.log",
     format=FORMAT,
     level=logging.INFO
 )
-logging.warning("Ahoj")
-logging.info("info")
-logging.fatal("fatal")
 
-logging.info("Write info")
+logger = logging.getLogger(__name__)
+# different name for each module
+handler = logging.FileHandler("test.log")
+formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.info("geh")
+# logging.warning("Ahoj")
+# logging.info("info")
+# logging.fatal("fatal")
+#
+# logging.info("Write info")
+#
+try:
+    with open("file.txt") as file:
+        date = file.read()
+    # 1/0
+except Exception as e:
+    logger.error("Cannot divide by zero!", exc_info=True)
+
+# except ZeroDivisionError as e
 
 try:
-    1/0
+    x = int(input("A: "))
+    y = int(input("B: "))
+    print(x/y)
+except ValueError as e:
+    print("Not a number")
+    logger.error("Not a number", exc_info=True)
 except ZeroDivisionError as e:
-    logging.error("Cannot divide by zero!", exc_info=True)
+    logger.error("Zero division", exc_info=True)
+except:
+    logger.error("Error", exc_info=True)

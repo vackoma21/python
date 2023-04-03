@@ -1,0 +1,87 @@
+2023-04-03 11:18:14,475 INFO geh
+2023-04-03 11:18:21,301 INFO geh
+2023-04-03 11:18:27,343 INFO geh
+2023-04-03 11:18:41,348 INFO geh
+2023-04-03 11:19:13,670 __main__ INFO geh
+2023-04-03 11:19:45,131 __main__ INFO geh
+2023-04-03 11:21:04,230 __main__ INFO geh
+2023-04-03 11:21:46,773 __main__ INFO geh
+2023-04-03 11:22:23,564 __main__ INFO geh
+2023-04-03 11:22:23,564 __main__ ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
+    with open("file.txt") as file:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+2023-04-03 11:25:07,870 __main__ INFO geh
+2023-04-03 11:25:07,870 __main__ ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
+    with open("file.txt") as file:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+2023-04-03 11:25:13,384 __main__ ERROR Not a number
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 75, in <module>
+    x = int(input("A: "))
+        ^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'g'
+2023-04-03 11:25:19,401 __main__ INFO geh
+2023-04-03 11:25:19,401 __main__ ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
+    with open("file.txt") as file:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+2023-04-03 11:25:26,517 __main__ ERROR Error
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 75, in <module>
+    x = int(input("A: "))
+            ^^^^^^^^^^^^
+KeyboardInterrupt
+2023-04-03 11:25:27,653 __main__ INFO geh
+2023-04-03 11:25:27,654 __main__ ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
+    with open("file.txt") as file:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+2023-04-03 11:25:31,687 __main__ ERROR Not a number
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 75, in <module>
+    x = int(input("A: "))
+        ^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '#'
+2023-04-03 11:25:35,200 __main__ INFO geh
+2023-04-03 11:25:35,201 __main__ ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
+    with open("file.txt") as file:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+2023-04-03 11:25:36,999 __main__ ERROR Not a number
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 75, in <module>
+    x = int(input("A: "))
+        ^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '#'
+2023-04-03 11:25:39,567 __main__ INFO geh
+2023-04-03 11:25:39,567 __main__ ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
+    with open("file.txt") as file:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+2023-04-03 11:25:43,623 __main__ ERROR Zero division
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 77, in <module>
+    print(x/y)
+          ~^~
+ZeroDivisionError: division by zero
+2023-04-03 11:26:29,317 __main__ INFO geh
+2023-04-03 11:26:29,318 __main__ ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
+    with open("file.txt") as file:
+         ^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
