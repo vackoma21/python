@@ -1,0 +1,40 @@
+2023-04-03 10:57:16,716 Ahoj
+2023-04-03 10:58:58,141 Ahoj
+2023-04-03 10:58:58,141 info
+2023-04-03 11:00:40,344 [WARNING] Ahoj
+2023-04-03 11:00:40,344 [INFO] info
+2023-04-03 11:01:15,727 [WARNING] Ahoj
+2023-04-03 11:01:15,728 [INFO] info
+2023-04-03 11:01:15,728 [FATAL] fatal
+2023-04-03 11:06:21,388 WARNING Ahoj
+2023-04-03 11:06:21,388 INFO info
+2023-04-03 11:06:21,388 CRITICAL fatal
+2023-04-03 11:06:46,028 WARNING Ahoj
+2023-04-03 11:06:46,028 INFO info
+2023-04-03 11:06:46,028 CRITICAL fatal
+2023-04-03 11:06:46,028 INFO Write info
+2023-04-03 11:09:39,940 WARNING Ahoj
+2023-04-03 11:09:39,940 INFO info
+2023-04-03 11:09:39,940 CRITICAL fatal
+2023-04-03 11:09:39,941 INFO Write info
+2023-04-03 11:09:39,941 ERROR Cannot divide by zero!
+2023-04-03 11:12:01,855 WARNING Ahoj
+2023-04-03 11:12:01,855 INFO info
+2023-04-03 11:12:01,855 CRITICAL fatal
+2023-04-03 11:12:01,855 INFO Write info
+2023-04-03 11:12:01,855 ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 58, in <module>
+    1/0
+    ~^~
+ZeroDivisionError: division by zero
+2023-04-03 11:12:19,961 WARNING Ahoj
+2023-04-03 11:12:19,961 INFO info
+2023-04-03 11:12:19,961 CRITICAL fatal
+2023-04-03 11:12:19,961 INFO Write info
+2023-04-03 11:12:19,961 ERROR Cannot divide by zero!
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/main.py", line 58, in <module>
+    1/0
+    ~^~
+ZeroDivisionError: division by zero
