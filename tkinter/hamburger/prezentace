@@ -1,0 +1,20 @@
+po 2 lidech skupiny
+prakticky priklad/ ukazky
+1 hodinu jeden team, druha hodina dalsi team
+
+v pondeli dalsi hodinu si projdeme prezentace, zatim prezentovani nebude, vylepseni, oprava chyb, pripominky
+logging v pyhonu
+- proces informovani o behu programu
+- uchovani/zobrazeni infa o chybach varovanich.... behem behu programu
+- k analyze s reseni problemu
+
+- kontrola pohybu dat na aplikaci
+- diagnostika vykonu aplikace
+- umoznuje sledovat chovani programu
+- debug, info, warning, error, fatal
+
+- vzdy pouzivat knihovnu daneho jazyka
+- logovat na spravne urovni
+- logovat do vice loggeru (konzole, soubory...(*.log))
+- psat uzitecne info, bez zbytecnych informaci
+- pouzivat anglictinu - encoding a jaz. bariera

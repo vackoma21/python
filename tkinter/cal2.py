@@ -194,7 +194,7 @@ delBttn = Button(root,
                  activebackground=bgColor, activeforeground=fgColor,
                  command=delLast)
 
-col = 3
+col = 4
 nums = 9
 for x in range(1, nums+2):
     if col == 0:
@@ -216,19 +216,19 @@ for x in range(1, nums+2):
 
     nums = nums - 1
 
-# valLabel.grid(row=0, column=0, columnspan=4, sticky="NSEW", pady=6)
+valLabel.grid(row=0, column=0, columnspan=4, sticky="NSEW", pady=6)
 screen.grid(row=0, column=0, columnspan=4, sticky="NSEW", pady=8)
-plusBttn.grid(row=4, column=1, sticky="NSEW")
-minusBttn.grid(row=4, column=2, sticky="NSEW")
-equalBttn.grid(row=5, column=0, sticky="NSEW")
-multiBttn.grid(row=5, column=1, sticky="NSEW")
-diviBttn.grid(row=5, column=2, sticky="NSEW")
-sqrtBttn.grid(row=1, column=3, sticky="NSEW")
-toBttn.grid(row=2, column=3, sticky="NSEW")
+plusBttn.grid(row=5, column=1, sticky="NSEW")
+minusBttn.grid(row=5, column=2, sticky="NSEW")
+equalBttn.grid(row=6, column=0, sticky="NSEW")
+multiBttn.grid(row=6, column=1, sticky="NSEW")
+diviBttn.grid(row=6, column=2, sticky="NSEW")
+sqrtBttn.grid(row=2, column=3, sticky="NSEW")
+toBttn.grid(row=3, column=3, sticky="NSEW")
 
 # dec_pointBttn.grid(row=3, column=3, sticky="NSEW")
 
-delBttn.grid(row=3, column=3, sticky="NSEW")
-clearBttn.grid(row=4, column=3, rowspan=2, sticky="NSEW")
+delBttn.grid(row=4, column=3, sticky="NSEW")
+clearBttn.grid(row=5, column=3, rowspan=2, sticky="NSEW")
 
 root.mainloop()
