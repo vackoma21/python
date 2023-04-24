@@ -1,7 +1,220 @@
-2023-04-03 11:26:29,317 INFO geh
-2023-04-03 11:26:29,318 ERROR Cannot divide by zero!
+2023-04-24 10:47:24,608 INFO [Errno 2] No such file or directory: 'sfw'
 Traceback (most recent call last):
-  File "/Users/vackoma21/PycharmProjects/python/main.py", line 66, in <module>
-    with open("file.txt") as file:
-         ^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: 'file.txt'
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 9, in importFile
+    with open(screen.get()) as file:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'sfw'
+2023-04-24 10:47:26,943 INFO [Errno 2] No such file or directory: 'sfw'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 9, in importFile
+    with open(screen.get()) as file:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'sfw'
+2023-04-24 10:47:29,879 INFO [Errno 2] No such file or directory: 'sfw.rh'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 9, in importFile
+    with open(screen.get()) as file:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'sfw.rh'
+2023-04-24 10:47:30,580 INFO [Errno 2] No such file or directory: 'sfw.rh'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 9, in importFile
+    with open(screen.get()) as file:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'sfw.rh'
+2023-04-24 10:53:35,673 INFO [Errno 2] No such file or directory: 'vsld'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 9, in importFile
+    with open(screen.get()) as file:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'vsld'
+2023-04-24 10:53:41,294 INFO [Errno 2] No such file or directory: 'vals'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 9, in importFile
+    with open(screen.get()) as file:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'vals'
+2023-04-24 10:56:48,260 INFO '_io.TextIOWrapper' object has no attribute 'readLine'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 10, in importFile
+    data = file.readLine()
+           ^^^^^^^^^^^^^
+AttributeError: '_io.TextIOWrapper' object has no attribute 'readLine'
+2023-04-24 10:56:49,595 INFO '_io.TextIOWrapper' object has no attribute 'readLine'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 10, in importFile
+    data = file.readLine()
+           ^^^^^^^^^^^^^
+AttributeError: '_io.TextIOWrapper' object has no attribute 'readLine'
+2023-04-24 11:18:57,800 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 33, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:20:27,705 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 33, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:20:27,708 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 33, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:22:59,859 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:22:59,861 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:24:53,166 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:24:53,168 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:24:53,168 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+                   ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:24:53,169 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:24:53,169 ERROR could not convert string to float: 'r'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: 'r'
+2023-04-24 11:27:12,810 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:27:12,812 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:27:12,813 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+                   ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:27:12,813 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:27:12,813 ERROR could not convert string to float: 'r'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: 'r'
+2023-04-24 11:27:26,171 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 44, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:33:57,431 INFO No error detected
+2023-04-24 11:34:00,616 INFO No error detected
+2023-04-24 11:35:28,086 INFO No error detected
+2023-04-24 11:35:40,863 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 49, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:35:40,865 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 49, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:35:40,866 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 49, in divide
+    print(float(x)/float(y))
+                   ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:35:40,866 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 49, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:35:40,866 ERROR could not convert string to float: 'r'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 49, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: 'r'
+2023-04-24 11:35:40,866 ERROR not enough values to unpack (expected 2, got 1)
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 35, in importFile
+    x, y = equation.split(',')
+    ^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
+2023-04-24 11:35:40,866 INFO No error detected
+2023-04-24 11:37:05,713 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:37:05,716 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:37:05,717 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+                   ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-04-24 11:37:05,717 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-04-24 11:37:05,717 ERROR could not convert string to float: 'r'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: 'r'
+2023-04-24 11:37:05,717 ERROR not enough values to unpack (expected 2, got 1)
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 34, in importFile
+    x, y = equation.split(',')
+    ^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
