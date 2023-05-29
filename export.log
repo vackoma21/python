@@ -218,3 +218,45 @@ Traceback (most recent call last):
     x, y = equation.split(',')
     ^^^^
 ValueError: not enough values to unpack (expected 2, got 1)
+2023-05-29 09:50:21,831 INFO [Errno 2] No such file or directory: 'vals.csv.csv'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 21, in importFile
+    with open(screen.get()+".csv", "r") as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'vals.csv.csv'
+2023-05-29 09:50:27,972 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-05-29 09:50:27,972 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-05-29 09:50:27,972 ERROR could not convert string to float: ''
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+                   ^^^^^^^^
+ValueError: could not convert string to float: ''
+2023-05-29 09:50:27,973 ERROR float division by zero
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ~~~~~~~~^~~~~~~~~
+ZeroDivisionError: float division by zero
+2023-05-29 09:50:27,973 ERROR could not convert string to float: 'r'
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 51, in divide
+    print(float(x)/float(y))
+          ^^^^^^^^
+ValueError: could not convert string to float: 'r'
+2023-05-29 09:50:27,973 ERROR not enough values to unpack (expected 2, got 1)
+Traceback (most recent call last):
+  File "/Users/vackoma21/PycharmProjects/python/division.py", line 34, in importFile
+    x, y = equation.split(',')
+    ^^^^
+ValueError: not enough values to unpack (expected 2, got 1)
