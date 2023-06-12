@@ -26,3 +26,4 @@ def message(text):
 
 
 message('HELL O')
+message('L')
