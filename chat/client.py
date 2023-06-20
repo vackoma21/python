@@ -2,24 +2,20 @@ import threading
 from tkinter import *
 import socket
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 server = socket.gethostbyname(socket.gethostname())
 
+#host = socket.gethostname()
+#host = '127.0.0.1'
 host = socket.gethostname()
 port = 2206
-
-try:
-    s.connect((host, port))
-    print(f'Connected to the server')
-except:
-    print(f'Unable to access the server {host} {port}')
+user = []
 
 
 def send_to_server(conn):
     username = input('Username: ')
     if username != '':
         conn.sendall(username.encode('ascii'))
+        print(f'User sent their username {username}')
     else:
         print('Username cannot be empty')
         exit(0)
@@ -29,24 +25,37 @@ def send_to_server(conn):
 
 
 def send_message(conn):
-    while True:
-        message = input()
-        if message != '':
-            conn.sendall(message).encode('ascii')
-        else:
-            print('Empty msg')
-            exit(0)
+    try:
+        while True:
+            message = input()
+            conn.sendall(message.encode('ascii'))
+    except:
+        print(f'User logged out {user[0]}')
 
 
 def get_message(conn):
     while True:
         msg = conn.recv(1024).decode('ascii')
+        user.append(msg)
         if msg != '':
             username = msg.split(':')[0]
             content = msg.split(':')[1]
             print(msg)
         else:
             print('Message from client is empty.')
+
+
+def clientCode():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    try:
+        s.connect((host, port))
+        print(f'Connected to the server')
+    except:
+        print(f'Unable to access the server {host} {port}')
+    send_to_server(s)
+
+
 #msg = s.recv(1024)
 #print(msg.decode('ascii'))
 #s.close()
@@ -124,3 +133,5 @@ def get_message(conn):
 #
 #
 # root.mainloop()
+
+clientCode()

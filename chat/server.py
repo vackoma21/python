@@ -1,23 +1,29 @@
 import socket
-from _thread import *
 import threading
+import logging
 
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server = socket.gethostbyname(socket.gethostname())
 
+#host = '127.0.0.1'
 host = socket.gethostname()
 port = 2206
 clients = []
 
-serversocket.bind((host, port))
-print(serversocket.getsockname())
+
+
+
+def send_to_client(conn, message):
+    conn[1].sendall(message.encode())
+    print(f'New message was recieved from [{conn[0]}]: {message}')
 
 
 def send_toClients_fun(conn, message):
     for client in clients:
-        try:
-            client[1].sendall(message.encode('ascii'))
-        except:
-            print(f'Message ,{message}\' could not be sent')
+        send_to_client(client, message)
+        # try:
+        #     client[1].sendall(message.encode('ascii'))
+        # except:
+        #     print(f'Message ,{message}\' could not be sent')
 
 
 def recv_message(conn, username):
@@ -27,7 +33,7 @@ def recv_message(conn, username):
             sentMsg = "[" + username + "]: " + msg
             send_toClients_fun(conn, sentMsg)
         else:
-            print(f'Sent message is empty, from client {username}')
+            print(f'Sent message is empty, from client [{conn}]: ,{username}\'')
 
 
 def client_fun(conn, addr):
@@ -36,11 +42,14 @@ def client_fun(conn, addr):
         msg = conn.recv(1024).decode('ascii')
         if msg != '':
             clients.append((msg, conn))
+            newConnMsg = f"[SERVER]: {msg} has been connected."
+            send_toClients_fun(conn, newConnMsg)
+            print(f'Message was received: {msg}')
             break
         else:
             print('Sent message is empty')
 
-    threading.Thread(target=recv_message, args=(clientsocket, msg,)).start()
+    threading.Thread(target=recv_message, args=(conn, msg,)).start()
 
 
 # def client_fun(conn, addr):
@@ -58,20 +67,25 @@ def client_fun(conn, addr):
 #                     clients.remove(conn)
 #         except:
 #             continue
+def serverCode():
 
-serversocket.listen()
+    serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-while True:
+    try:
+        serversocket.bind((host, port))
 
-    clientsocket, addr = serversocket.accept()
-    print(f'New connection: {addr[0]} {addr[1]}')
-    #clients.append(clientsocket.getpeername())
-    threading.Thread(target=client_fun, args=(clientsocket, addr,)).start()
-    # msg_len = clientsocket.recv(header).decode('ASCII')
-    # if msg_len:
-    #     msg = clientsocket.recv(int(msg_len)).decode('ASCII')
-    #     print(msg)
-    #     clientsocket.sendall(b'msg')
-    # clientsocket.sendall(b'Hello world!')
-    #start_new_thread(client_fun, (clientsocket, addr))
+        print(f'Running on: {host} {port}')
+    except:
+        print('Error')
 
+    serversocket.listen()
+
+    while True:
+
+        clientsocket, addr = serversocket.accept()
+        print(f'New connection: {addr[0]} {addr[1]}')
+        #clients.append(clientsocket.getpeername())
+        threading.Thread(target=client_fun, args=(clientsocket, addr,)).start()
+
+
+serverCode()
