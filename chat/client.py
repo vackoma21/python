@@ -20,6 +20,7 @@ root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.columnconfigure(2, weight=1)
 
+
 # frames
 chatFrame = tk.Frame(root, width=800, height=250)
 chatFrame.grid(row=0, column=0, padx=10, pady=5)
