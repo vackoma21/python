@@ -1,0 +1,32 @@
+2023-06-25 22:09:54,592 INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 22:10:19,068 INFO [SERVER] New connection: 172.17.224.1 50755
+2023-06-25 22:10:19,069 INFO [SERVER] xXDarkAssasinXx has been connected.
+2023-06-25 22:10:34,857 INFO [xXDarkAssasinXx]: Is anyone here?
+2023-06-25 22:11:27,559 INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 22:11:39,044 INFO [SERVER] New connection: 172.17.224.1 50790
+2023-06-25 22:11:39,045 INFO [SERVER] User007 has been connected.
+2023-06-25 22:12:16,806 INFO [SERVER] New connection: 172.17.224.1 50805
+2023-06-25 22:12:16,806 INFO [SERVER] xXn0bodyXx has been connected.
+2023-06-25 22:12:21,532 INFO [xXn0bodyXx]: Hi
+2023-06-25 22:12:37,772 INFO [User007]: Who are you??
+2023-06-25 22:12:56,097 INFO [xXn0bodyXx]: ? Can't see my username
+2023-06-25 22:13:01,005 INFO [User007]: ...
+2023-06-25 22:13:06,148 INFO [User007]: That's not what I meant
+2023-06-25 22:13:13,391 INFO [User007]: What are you doing here?
+2023-06-25 22:13:22,821 INFO [User007]: You are not supposed to be here.
+2023-06-25 22:13:28,349 INFO [xXn0bodyXx]: ?
+2023-06-25 22:13:44,113 INFO [xXn0bodyXx]: Last time I checked, this was a public chat room
+2023-06-25 22:14:21,503 INFO [User007]: What do you mean? It's not public at all!
+2023-06-25 22:14:26,006 INFO [User007]: Do I know you?
+2023-06-25 22:15:03,651 INFO [xXn0bodyXx]: For the last few minutes yes
+2023-06-25 22:15:19,496 INFO [User007]: Ehm.. alright
+2023-06-25 22:16:00,617 INFO [User007]: Are you a hacker or something like that? 
+2023-06-25 22:16:10,742 INFO [User007]: Even thought it doesn't make sense for you to be here...
+2023-06-25 22:16:28,123 INFO [xXn0bodyXx]: Hey man, you acting kinda weird
+2023-06-25 22:16:41,944 INFO [xXn0bodyXx]: Tbh it's kinda scary
+2023-06-25 22:17:06,558 INFO [User007]: Bye
+2023-06-25 22:17:12,959 INFO [xXn0bodyXx]: What?
+2023-06-25 22:17:23,631 INFO [SERVER] Deleted 1, ('xXn0bodyXx', <socket.socket fd=496, family=2, type=1, proto=0, laddr=('172.17.224.1', 2207), raddr=('172.17.224.1', 50805)>)
+2023-06-25 22:17:23,631 INFO [SERVER] xXn0bodyXx logged out
+2023-06-25 22:17:34,541 INFO [SERVER] Deleted 0, ('User007', <socket.socket fd=168, family=2, type=1, proto=0, laddr=('172.17.224.1', 2207), raddr=('172.17.224.1', 50790)>)
+2023-06-25 22:17:34,541 INFO [SERVER] User007 logged out

@@ -6,7 +6,7 @@ serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 header = 64
 
 server = socket.gethostbyname(socket.gethostname())     # ipv4
-host = socket.gethostname()
+host = socket.gethostbyname(socket.gethostname())
 port = 2205
 clients = set()
 threading.Lock()
