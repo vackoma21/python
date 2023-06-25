@@ -1,0 +1,67 @@
+2023-06-25 21:54:13,128 __main__ INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 21:54:49,405 __main__ INFO New connection: 172.17.224.1 50446
+2023-06-25 21:54:49,406 __main__ INFO [SERVER] Mike has been connected.
+2023-06-25 21:54:49,406 __main__ INFO New message was recieved from [SERVER] Mike has been connected.
+2023-06-25 21:56:30,856 __main__ INFO [Mike]: Hi
+2023-06-25 21:56:30,856 __main__ INFO New message was recieved from [Mike]: Hi
+2023-06-25 21:57:11,095 __main__ INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 21:57:19,448 __main__ INFO [SERVER] New connection: 172.17.224.1 50476
+2023-06-25 21:57:19,449 __main__ INFO [SERVER] User007 has been connected.
+2023-06-25 21:57:21,550 __main__ INFO [User007]: Hi
+2023-06-25 21:58:26,386 __main__ INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 21:58:59,162 __main__ INFO [SERVER] New connection: 172.17.224.1 <socket.socket fd=480, family=2, type=1, proto=0, laddr=('172.17.224.1', 2207), raddr=('172.17.224.1', 50494)>
+2023-06-25 21:58:59,162 __main__ INFO [SERVER] xXAssasinMasterXx has been connected.
+2023-06-25 21:59:03,026 __main__ INFO [xXAssasinMasterXx]: Howdy
+2023-06-25 21:59:50,868 __main__ INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 21:59:57,926 __main__ INFO [SERVER] New connection: 172.17.224.1 50500
+2023-06-25 21:59:57,927 __main__ INFO [SERVER] User007 has been connected.
+2023-06-25 22:02:23,179 __main__ INFO [SERVER] New connection: 172.17.224.1 50568
+2023-06-25 22:02:23,180 __main__ INFO [SERVER] Mike has been connected.
+2023-06-25 22:02:25,051 __main__ INFO [Mike]: Hi
+2023-06-25 22:02:39,670 __main__ INFO [User007]: Hello
+2023-06-25 22:02:43,888 __main__ INFO [User007]: How are you?
+2023-06-25 22:02:59,757 __main__ INFO [Mike]: it's good
+2023-06-25 22:03:18,915 __main__ INFO [Mike]: how did you find this chat?
+2023-06-25 22:03:23,704 __main__ INFO [User007]: ?
+2023-06-25 22:03:29,741 __main__ INFO [User007]: What do you mean?
+2023-06-25 22:04:01,094 __main__ INFO [User007]: On the internet i suppose xd
+2023-06-25 22:04:14,916 __main__ INFO [User007]: but really, what's up with that question?
+2023-06-25 22:07:04,976 __main__ INFO [Mike]: hmm...
+2023-06-25 22:07:09,298 __main__ INFO [Mike]: nevermind then
+2023-06-25 22:07:25,926 __main__ INFO [User007]: aight
+2023-06-25 22:08:43,672 __main__ INFO [SERVER] Deleted 1, ('Mike', <socket.socket fd=528, family=2, type=1, proto=0, laddr=('172.17.224.1', 2207), raddr=('172.17.224.1', 50568)>)
+2023-06-25 22:08:43,672 __main__ INFO [SERVER] Mike logged out
+2023-06-25 22:08:57,753 __main__ INFO [SERVER] Deleted 0, ('User007', <socket.socket fd=496, family=2, type=1, proto=0, laddr=('172.17.224.1', 2207), raddr=('172.17.224.1', 50500)>)
+2023-06-25 22:08:57,753 __main__ INFO [SERVER] User007 logged out
+2023-06-25 22:09:54,592 __main__ INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 22:10:19,068 __main__ INFO [SERVER] New connection: 172.17.224.1 50755
+2023-06-25 22:10:19,069 __main__ INFO [SERVER] xXDarkAssasinXx has been connected.
+2023-06-25 22:10:34,857 __main__ INFO [xXDarkAssasinXx]: Is anyone here?
+2023-06-25 22:11:27,559 __main__ INFO [SERVER] Running on: 172.17.224.1 2207
+2023-06-25 22:11:39,044 __main__ INFO [SERVER] New connection: 172.17.224.1 50790
+2023-06-25 22:11:39,045 __main__ INFO [SERVER] User007 has been connected.
+2023-06-25 22:12:16,806 __main__ INFO [SERVER] New connection: 172.17.224.1 50805
+2023-06-25 22:12:16,806 __main__ INFO [SERVER] xXn0bodyXx has been connected.
+2023-06-25 22:12:21,532 __main__ INFO [xXn0bodyXx]: Hi
+2023-06-25 22:12:37,772 __main__ INFO [User007]: Who are you??
+2023-06-25 22:12:56,097 __main__ INFO [xXn0bodyXx]: ? Can't see my username
+2023-06-25 22:13:01,005 __main__ INFO [User007]: ...
+2023-06-25 22:13:06,148 __main__ INFO [User007]: That's not what I meant
+2023-06-25 22:13:13,391 __main__ INFO [User007]: What are you doing here?
+2023-06-25 22:13:22,821 __main__ INFO [User007]: You are not supposed to be here.
+2023-06-25 22:13:28,349 __main__ INFO [xXn0bodyXx]: ?
+2023-06-25 22:13:44,113 __main__ INFO [xXn0bodyXx]: Last time I checked, this was a public chat room
+2023-06-25 22:14:21,503 __main__ INFO [User007]: What do you mean? It's not public at all!
+2023-06-25 22:14:26,006 __main__ INFO [User007]: Do I know you?
+2023-06-25 22:15:03,651 __main__ INFO [xXn0bodyXx]: For the last few minutes yes
+2023-06-25 22:15:19,496 __main__ INFO [User007]: Ehm.. alright
+2023-06-25 22:16:00,617 __main__ INFO [User007]: Are you a hacker or something like that? 
+2023-06-25 22:16:10,742 __main__ INFO [User007]: Even thought it doesn't make sense for you to be here...
+2023-06-25 22:16:28,123 __main__ INFO [xXn0bodyXx]: Hey man, you acting kinda weird
+2023-06-25 22:16:41,944 __main__ INFO [xXn0bodyXx]: Tbh it's kinda scary
+2023-06-25 22:17:06,558 __main__ INFO [User007]: Bye
+2023-06-25 22:17:12,959 __main__ INFO [xXn0bodyXx]: What?
+2023-06-25 22:17:23,631 __main__ INFO [SERVER] Deleted 1, ('xXn0bodyXx', <socket.socket fd=496, family=2, type=1, proto=0, laddr=('172.17.224.1', 2207), raddr=('172.17.224.1', 50805)>)
+2023-06-25 22:17:23,631 __main__ INFO [SERVER] xXn0bodyXx logged out
+2023-06-25 22:17:34,541 __main__ INFO [SERVER] Deleted 0, ('User007', <socket.socket fd=168, family=2, type=1, proto=0, laddr=('172.17.224.1', 2207), raddr=('172.17.224.1', 50790)>)
+2023-06-25 22:17:34,541 __main__ INFO [SERVER] User007 logged out
